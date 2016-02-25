@@ -37,9 +37,7 @@ public class Reasoner {
       if (equivalentOrSubsumptions == null) {
         equivalentOrSubsumptions = new HashSet<>();
       }
-      for (Expression equivalentOrSubsumption : equivalentOrSubsumptions) {
-        expressions.add(equivalentOrSubsumption);
-      }
+      expressions.addAll(equivalentOrSubsumptions);
       tbox.put(expression, equivalentOrSubsumptions);
     }
     return originalSize != expressions.size();
@@ -52,6 +50,7 @@ public class Reasoner {
       System.out.println(e);
     }
   }
+
   public boolean queryIsValid() {
     Set<Expression> cExpanded = new HashSet<>();
     Set<Expression> dExpanded = new HashSet<>();
@@ -68,6 +67,7 @@ public class Reasoner {
         databaseUpdated |= expand(cExpanded);
         databaseUpdated |= expand(dExpanded);
 
+//        print(tbox);
 //        print("C", cExpanded);
 //        print("D", dExpanded);
       }
