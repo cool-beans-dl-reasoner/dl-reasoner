@@ -1,5 +1,6 @@
 package reasoner;
 
+import reasoner.expressions.ExistentialExpression;
 import reasoner.expressions.Expression;
 
 import java.util.HashSet;
@@ -34,9 +35,8 @@ public class Reasoner {
       if (!foundContradiction) {
         databaseUpdated |= expand(cAndD);
 
-//        print(tbox);
-//        print("C", cExpanded);
-//        print("D", dExpanded);
+        System.out.println(tbox);
+        print("C", cAndD);
       }
     } while (!foundContradiction && databaseUpdated);
 
@@ -79,15 +79,23 @@ public class Reasoner {
    */
   public boolean expand(Set<Expression> expressions) {
     int originalSize = expressions.size();
-
     Set<Expression> newExpressions = new HashSet<>();
     for (Expression expression : expressions) {
-      Set<Expression> equivalentOrSubsumptions = tbox.get(expression);
-      if (equivalentOrSubsumptions == null) {
-        equivalentOrSubsumptions = new HashSet<>();
+      if (expression instanceof ExistentialExpression) {
+        ExistentialExpression existentialExpression = (ExistentialExpression) expression;
+        Set<Expression> newExpressions2 = new HashSet<>();
+        for (Expression e : existentialExpression.expressions) {
+          newExpressions2.addAll(tbox.get(e));
+        }
+        existentialExpression.addConcepts(newExpressions2);
+      } else {
+        Set<Expression> equivalentOrSubsumptions = tbox.get(expression);
+        if (equivalentOrSubsumptions == null) {
+          equivalentOrSubsumptions = new HashSet<>();
+        }
+        newExpressions.addAll(equivalentOrSubsumptions);
+        tbox.put(expression, equivalentOrSubsumptions);
       }
-      newExpressions.addAll(equivalentOrSubsumptions);
-      tbox.put(expression, equivalentOrSubsumptions);
     }
     expressions.addAll(newExpressions);
     return originalSize != expressions.size();

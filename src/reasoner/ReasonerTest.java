@@ -1,10 +1,7 @@
 package reasoner;
 
 import org.junit.Test;
-import reasoner.expressions.AndExpression;
-import reasoner.expressions.ConceptExpression;
-import reasoner.expressions.Expression;
-import reasoner.expressions.NotExpression;
+import reasoner.expressions.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -100,5 +97,51 @@ public class ReasonerTest {
     reasoner = new Reasoner(tbox, query);
     assertAnswer("Is richWoman a subset of man?", false, reasoner.queryIsValid());
     assertFalse(reasoner.queryIsValid());
+  }
+
+  @Test
+  public void testJohnGoesToBar() throws Exception {
+    ConceptExpression john = new ConceptExpression("JOHN");
+    ExistentialExpression goToBar = new ExistentialExpression("goTo", new ConceptExpression("BAR"));
+
+    Set<Expression> johnExpressions = new HashSet<>();
+    johnExpressions.add(goToBar);
+
+    TBox tbox = new TBox();
+    tbox.put(john, johnExpressions);
+
+    SubsumptionEquivalence query = new SubsumptionEquivalence(john, new NotExpression(goToBar));
+    Reasoner reasoner = new Reasoner(tbox, query);
+    assertAnswer("Does John go to the bar?", true, reasoner.queryIsValid());
+    query = new SubsumptionEquivalence(john, goToBar);
+    reasoner = new Reasoner(tbox, query);
+    assertAnswer("Does John not go to the bar?", false, reasoner.queryIsValid());
+  }
+
+  @Test
+  public void testJohnGoesToPub() throws Exception {
+    ConceptExpression john = new ConceptExpression("JOHN");
+    ConceptExpression bar = new ConceptExpression("BAR");
+    ConceptExpression pub = new ConceptExpression("PUB");
+
+    ExistentialExpression goToBar = new ExistentialExpression("goTo", bar);
+    ExistentialExpression goToPub = new ExistentialExpression("goTo", pub);
+
+    TBox tbox = new TBox();
+    Set<Expression> johnExpressions = new HashSet<>();
+    johnExpressions.add(goToBar);
+    tbox.put(john, johnExpressions);
+
+    Set<Expression> barExpressions = new HashSet<>();
+    barExpressions.add(pub);
+    tbox.put(bar, barExpressions);
+
+    Set<Expression> pubExpressions = new HashSet<>();
+    pubExpressions.add(bar);
+    tbox.put(pub, pubExpressions);
+
+    SubsumptionEquivalence query = new SubsumptionEquivalence(john, new NotExpression(goToPub));
+    Reasoner reasoner = new Reasoner(tbox, query);
+    assertAnswer("Does John go to the pub?", true, reasoner.queryIsValid());
   }
 }

@@ -1,6 +1,7 @@
 package reasoner.expressions;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class ExistentialExpression extends Expression {
   public String role;
@@ -69,5 +70,9 @@ public class ExistentialExpression extends Expression {
     sb.deleteCharAt(sb.length() - 1);
     sb.append("]");
     return sb.toString();
+  }
+
+  public void addConcepts(Set<Expression> expressions) {
+    this.expressions.addAll(expressions);
   }
 }
