@@ -22,20 +22,17 @@ public class Reasoner {
   }
 
   public boolean queryIsValid() {
-    Set<Expression> cExpanded = new HashSet<>();
-    Set<Expression> dExpanded = new HashSet<>();
-    cExpanded.add(query.lhs);
-    dExpanded.add(query.rhs);
+    Set<Expression> cAndD = new HashSet<>();
+    cAndD.add(query.lhs);
+    cAndD.add(query.rhs);
 
     boolean databaseUpdated;
     boolean foundContradiction;
     do {
       databaseUpdated = false;
-      foundContradiction = hasContradiction(cExpanded, dExpanded);
+      foundContradiction = hasContradiction(cAndD, cAndD);
       if (!foundContradiction) {
-        // Expand C and D
-        databaseUpdated |= expand(cExpanded);
-        databaseUpdated |= expand(dExpanded);
+        databaseUpdated |= expand(cAndD);
 
 //        print(tbox);
 //        print("C", cExpanded);
@@ -83,14 +80,16 @@ public class Reasoner {
   public boolean expand(Set<Expression> expressions) {
     int originalSize = expressions.size();
 
+    Set<Expression> newExpressions = new HashSet<>();
     for (Expression expression : expressions) {
       Set<Expression> equivalentOrSubsumptions = tbox.get(expression);
       if (equivalentOrSubsumptions == null) {
         equivalentOrSubsumptions = new HashSet<>();
       }
-      expressions.addAll(equivalentOrSubsumptions);
+      newExpressions.addAll(equivalentOrSubsumptions);
       tbox.put(expression, equivalentOrSubsumptions);
     }
+    expressions.addAll(newExpressions);
     return originalSize != expressions.size();
   }
 
