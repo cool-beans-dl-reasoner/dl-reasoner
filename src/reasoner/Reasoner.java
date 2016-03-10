@@ -3,6 +3,7 @@ package reasoner;
 import reasoner.expressions.ExistentialExpression;
 import reasoner.expressions.Expression;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -85,7 +86,11 @@ public class Reasoner {
         ExistentialExpression existentialExpression = (ExistentialExpression) expression;
         Set<Expression> newExpressions2 = new HashSet<>();
         for (Expression e : existentialExpression.expressions) {
-          newExpressions2.addAll(tbox.get(e));
+          Set<Expression> fromTbox = tbox.get(e);
+          if (fromTbox == null) {
+            fromTbox = Collections.EMPTY_SET;
+          }
+          newExpressions2.addAll(fromTbox);
         }
         existentialExpression.addConcepts(newExpressions2);
       } else {
