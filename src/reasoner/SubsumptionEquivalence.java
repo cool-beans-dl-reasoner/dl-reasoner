@@ -1,6 +1,7 @@
 package reasoner;
 
 import reasoner.expressions.Expression;
+import reasoner.expressions.NotExpression;
 
 /**
  * SubsumptionEquivalence class is used to declare two Expressions as being either
@@ -22,5 +23,10 @@ public class SubsumptionEquivalence {
   public SubsumptionEquivalence(Expression lhs, Expression rhs) {
     this.lhs = lhs;
     this.rhs = rhs;
+  }
+
+  // Only used to make testing easier.
+  public SubsumptionEquivalence negateRhs() {
+    return new SubsumptionEquivalence(lhs, new NotExpression(rhs));
   }
 }

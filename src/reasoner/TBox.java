@@ -3,10 +3,23 @@ package reasoner;
 import reasoner.expressions.Expression;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class TBox extends HashMap<Expression, Set<Expression>> {
+
+  public void add(SubsumptionEquivalence subsumptionEquivalence) {
+    Expression lhs = subsumptionEquivalence.lhs;
+    Expression rhs = subsumptionEquivalence.rhs;
+
+    Set<Expression> currentRhs = get(lhs);
+    if (currentRhs == null) {
+      currentRhs = new HashSet<>();
+    }
+    currentRhs.add(rhs);
+    put(lhs, currentRhs);
+  }
 
   @Override
   public String toString() {

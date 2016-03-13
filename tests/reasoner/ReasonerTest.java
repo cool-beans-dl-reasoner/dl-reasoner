@@ -144,4 +144,58 @@ public class ReasonerTest {
     Reasoner reasoner = new Reasoner(tbox, query);
     assertAnswer("Does John go to the pub?", true, reasoner.queryIsValid());
   }
+
+  @Test
+  public void testAssignmentSevenQuestion3() {
+    Expression john = new ConceptExpression("JOHN");
+    Expression british = new ConceptExpression("BRITISH");
+    Expression talksAboutWeather = new ExistentialExpression("talksAbout", new ConceptExpression("WEATHER"));
+    Expression carriesUmbrella = new ExistentialExpression("carries", new ConceptExpression("UMBRELLA"));
+    Expression allEatsNotIceCream = new UniversalExpression("eats", new NotExpression(new ConceptExpression("ICE_CREAM")));
+    Expression eatsPistachios = new ExistentialExpression("eats", new ConceptExpression("PISTACHIOS"));
+    Expression pistachios = new ConceptExpression("PISTACHIOS");
+    Expression fruit = new ConceptExpression("FRUIT");
+    Expression nut = new ConceptExpression("NUT");
+    Expression killer = new ConceptExpression("KILLER");
+    Expression allergicToNut = new ExistentialExpression("allgericTo", nut);
+
+    SubsumptionEquivalence johnIsBritish = new SubsumptionEquivalence(john, british);
+    SubsumptionEquivalence britishTalksAboutWeather = new SubsumptionEquivalence(british, talksAboutWeather);
+    SubsumptionEquivalence britishCarriesUmbrella = new SubsumptionEquivalence(british, carriesUmbrella);
+    SubsumptionEquivalence johnAllEatsNotIceCream = new SubsumptionEquivalence(john, allEatsNotIceCream);
+    SubsumptionEquivalence johnEatsPistachios = new SubsumptionEquivalence(john, eatsPistachios);
+    SubsumptionEquivalence pistachiosSubsetNotFruit = new SubsumptionEquivalence(pistachios, new NotExpression(fruit));
+    SubsumptionEquivalence pistachiosSubsetNut = new SubsumptionEquivalence(pistachios, nut);
+    SubsumptionEquivalence killerAllergicToNut = new SubsumptionEquivalence(killer, allergicToNut);
+    SubsumptionEquivalence killerSubsetBritish = new SubsumptionEquivalence(killer, british);
+
+    TBox tbox = new TBox();
+    tbox.add(johnIsBritish);
+    tbox.add(britishTalksAboutWeather);
+    tbox.add(britishCarriesUmbrella);
+    tbox.add(johnAllEatsNotIceCream);
+    tbox.add(johnEatsPistachios);
+    tbox.add(pistachiosSubsetNotFruit);
+    tbox.add(pistachiosSubsetNut);
+    tbox.add(killerAllergicToNut);
+    tbox.add(killerSubsetBritish);
+
+    SubsumptionEquivalence[] queries = new SubsumptionEquivalence[] {
+        johnIsBritish,
+        britishTalksAboutWeather,
+        britishCarriesUmbrella,
+        johnAllEatsNotIceCream,
+        johnEatsPistachios,
+        pistachiosSubsetNotFruit,
+        pistachiosSubsetNut,
+        killerAllergicToNut,
+        killerSubsetBritish,
+    };
+
+    // Test that everything we put in the Tbox is true.
+    for (SubsumptionEquivalence query : queries) {
+      Reasoner reasoner = new Reasoner(tbox, query.negateRhs());
+      assertTrue(reasoner.queryIsValid());
+    }
+  }
 }
