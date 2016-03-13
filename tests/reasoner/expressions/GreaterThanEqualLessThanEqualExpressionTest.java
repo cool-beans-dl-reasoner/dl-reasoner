@@ -22,11 +22,13 @@ public class GreaterThanEqualLessThanEqualExpressionTest {
     tbox.add(johnGoToBar);
     tbox.add(johnGoToSchool);
 
+    // Note that these are "opposite" for the subsumption
     Expression goToAtMostOneThing = new GreaterThanOrEqualToExpression("goTo", 1);
     Subsumption queryDoesJohnGoToAtMostOneThing = new Subsumption(john, goToAtMostOneThing);
     Reasoner reasoner = new Reasoner(tbox, queryDoesJohnGoToAtMostOneThing);
     assertTrue(reasoner.queryIsValid());
 
+    // Note that these are "opposite" for the subsumption
     Expression goToAtLeastOneThing = new LessThanOrEqualToExpression("goTo", 1);
     Subsumption queryDoesJohnGoToAtLeastOneThing = new Subsumption(john, goToAtLeastOneThing);
     Reasoner reasoner2 = new Reasoner(tbox, queryDoesJohnGoToAtLeastOneThing);
