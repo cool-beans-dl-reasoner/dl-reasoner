@@ -1,10 +1,10 @@
 package reasoner.expressions;
 
-public class AndExpression extends Expression {
+public class IntersectUnionExpression extends Expression {
   public Expression lhs;
   public Expression rhs;
 
-  public AndExpression(Expression lhs, Expression rhs) {
+  public IntersectUnionExpression(Expression lhs, Expression rhs) {
     this.lhs = lhs;
     this.rhs = rhs;
   }

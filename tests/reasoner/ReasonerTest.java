@@ -56,7 +56,7 @@ public class ReasonerTest {
     TBox tbox = new TBox();
     ConceptExpression man = new ConceptExpression("MAN");
     ConceptExpression rich = new ConceptExpression("RICH");
-    AndExpression richAndMan = new AndExpression(rich, man);
+    IntersectExpression richAndMan = new IntersectExpression(rich, man);
     ConceptExpression richMan = new ConceptExpression("RICH_MAN");
 
     // Richman is equal to richAndMan
@@ -75,7 +75,7 @@ public class ReasonerTest {
     TBox tbox = new TBox();
     ConceptExpression man = new ConceptExpression("MAN");
     ConceptExpression rich = new ConceptExpression("RICH");
-    AndExpression richAndMan = new AndExpression(rich, man);
+    IntersectExpression richAndMan = new IntersectExpression(rich, man);
     ConceptExpression richMan = new ConceptExpression("RICH_MAN");
     // Richman is equal to richAndMan
     Set<Expression> richManExpressions = new HashSet<>();
@@ -83,7 +83,7 @@ public class ReasonerTest {
     tbox.put(richMan, richManExpressions);
 
     ConceptExpression richWoman = new ConceptExpression("RICH_WOMAN");
-    AndExpression richAndNotRichMan = new AndExpression(rich, new NotExpression(richAndMan));
+    IntersectExpression richAndNotRichMan = new IntersectExpression(rich, new NotExpression(richAndMan));
     // Richwoman is equal to rich and not richMan
     Set<Expression> richWomanExpressions = new HashSet<>();
     richWomanExpressions.add(richAndNotRichMan);

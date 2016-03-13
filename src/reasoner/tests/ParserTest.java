@@ -1,17 +1,10 @@
 package reasoner.tests;
 
 import reasoner.Parser;
-import reasoner.Reasoner;
-import reasoner.SubsumptionEquivalence;
 import reasoner.TBox;
-import reasoner.expressions.AndExpression;
-import reasoner.expressions.ConceptExpression;
-import reasoner.expressions.ExistentialExpression;
-import reasoner.expressions.Expression;
-import reasoner.expressions.NotExpression;
-import reasoner.expressions.UniversalExpression;
+import reasoner.expressions.*;
+import reasoner.expressions.IntersectExpression;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class ParserTest {
@@ -29,7 +22,7 @@ public class ParserTest {
 		TBox tbox = parser.getTBox();
 		ConceptExpression man = new ConceptExpression("MAN");
 		ConceptExpression rich = new ConceptExpression("RICH");
-		AndExpression richAndMan = new AndExpression(rich, man);
+		IntersectExpression richAndMan = new IntersectExpression(rich, man);
 		ConceptExpression richMan = new ConceptExpression("RICH_MAN");
 
 		Set<Expression> richManIsEqualToExpressions = tbox.get(richMan);
@@ -43,7 +36,7 @@ public class ParserTest {
 		TBox tbox = parser.getTBox();
 		ConceptExpression woman = new ConceptExpression("WOMAN");
 		ConceptExpression rich = new ConceptExpression("RICH");
-		AndExpression richAndWoman = new AndExpression(rich, woman);
+		IntersectExpression richAndWoman = new IntersectExpression(rich, woman);
 		ConceptExpression richWoman = new ConceptExpression("RICH_WOMAN");
 
 		Set<Expression> richWomanIsEqualToExpressions = tbox.get(richWoman);
@@ -70,7 +63,7 @@ public class ParserTest {
 		TBox tbox = parser.getTBox();
 		ConceptExpression undergrad = new ConceptExpression("UNDERGRAD");
 		ConceptExpression grad = new ConceptExpression("GRAD");
-		AndExpression undergradandgrad = new AndExpression(undergrad, grad);
+		IntersectExpression undergradandgrad = new IntersectExpression(undergrad, grad);
 		ConceptExpression students = new ConceptExpression("STUDENTS");
 		Set<Expression> studentsequivalentExp = tbox.get(students);
 		assert (studentsequivalentExp.size() == 1);
