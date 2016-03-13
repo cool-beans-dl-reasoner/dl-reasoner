@@ -2,6 +2,7 @@ package reasoner;
 
 import reasoner.expressions.ExistentialUniversalExpression;
 import reasoner.expressions.Expression;
+import reasoner.expressions.GreaterThanEqualLessThanEqualExpression;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -59,6 +60,12 @@ public class Reasoner {
     // expressions in the rhs.
 
     for (Expression expression1 : lhs) {
+      if (expression1 instanceof GreaterThanEqualLessThanEqualExpression) {
+        GreaterThanEqualLessThanEqualExpression e = (GreaterThanEqualLessThanEqualExpression) expression1;
+        if (e.contradicts(lhs) || e.contradicts(rhs)) {
+          return true;
+        }
+      }
       for (Expression expression2 : rhs) {
         if (expression1.contradicts(expression2)) {
           return true;
