@@ -30,5 +30,8 @@ public class Main {
 		ParserTest.fluffylikesGuacomole();
 		ParserTest.BritishgotoBar();
 		ParserTest.JohneatsonlyFruits();
+		ReasonerTest.teststudentswithunion();
+		ReasonerTest.testGreaterthanequal();
+		ReasonerTest.testlessthanequal();
 	}
 }
