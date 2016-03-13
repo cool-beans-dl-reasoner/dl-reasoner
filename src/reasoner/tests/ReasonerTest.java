@@ -3,9 +3,19 @@ package reasoner.tests;
 import reasoner.Reasoner;
 import reasoner.SubsumptionEquivalence;
 import reasoner.TBox;
-import reasoner.expressions.*;
-import reasoner.expressions.IntersectExpression;
+import reasoner.expressions.AndExpression;
+import reasoner.expressions.BottomExpression;
+import reasoner.expressions.ConceptExpression;
+import reasoner.expressions.ExistentialExpression;
+import reasoner.expressions.Expression;
+import reasoner.expressions.GreaterThanEqualLessThanEqualExpression;
+import reasoner.expressions.GreaterThanOrEqualToExpression;
+import reasoner.expressions.LessThanOrEqualToExpression;
+import reasoner.expressions.NotExpression;
+import reasoner.expressions.UnionExpression;
+import reasoner.expressions.UniversalExpression;
 
+import java.lang.Character.Subset;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,7 +67,7 @@ public class ReasonerTest {
 		TBox tbox = new TBox();
 		ConceptExpression man = new ConceptExpression("MAN");
 		ConceptExpression rich = new ConceptExpression("RICH");
-		IntersectExpression richAndMan = new IntersectExpression(rich, man);
+		AndExpression richAndMan = new AndExpression(rich, man);
 		ConceptExpression richMan = new ConceptExpression("RICH_MAN");
 
 		// Richman is equal to richAndMan
@@ -78,7 +88,7 @@ public class ReasonerTest {
 		ConceptExpression undergrad = new ConceptExpression(
 				"UndergraduateStudents");
 		ConceptExpression grad = new ConceptExpression("GraduateStudents");
-		IntersectExpression undergradandgrad = new IntersectExpression(undergrad, grad);
+		AndExpression undergradandgrad = new AndExpression(undergrad, grad);
 		ConceptExpression students = new ConceptExpression("Students");
 
 		// Students are equal to undergrad and grad students
@@ -186,6 +196,76 @@ public class ReasonerTest {
 
 	}
 
+	public static void testfluffywithunion() {
+		TBox tBox = new TBox();
+		ConceptExpression fluffy = new ConceptExpression("Fluffy");
+		ConceptExpression fish = new ConceptExpression("Fish");
+		ConceptExpression guacomole = new ConceptExpression("Guacomole");
+		UnionExpression union = new UnionExpression(fish, guacomole);
+
+		Set<Expression> subExpressions = new HashSet<>();
+		subExpressions.add(union);
+		tBox.put(fluffy, subExpressions);
+		SubsumptionEquivalence query = new SubsumptionEquivalence(fluffy,
+				new NotExpression(union));
+		Reasoner reasoner = new Reasoner(tBox, query);
+		assertAnswer("Fluffy likes Fish or Guacomole?", true,
+				reasoner.queryIsValid());
+
+	}
+
+	public static void teststudentswithunion() {
+		TBox tBox = new TBox();
+		ConceptExpression Students = new ConceptExpression("Students");
+		ConceptExpression undergrad = new ConceptExpression("Undergrad");
+		ConceptExpression grad = new ConceptExpression("Grad");
+		UnionExpression union = new UnionExpression(undergrad, grad);
+
+		Set<Expression> subExpressions = new HashSet<>();
+		subExpressions.add(union);
+		tBox.put(Students, subExpressions);
+		SubsumptionEquivalence query = new SubsumptionEquivalence(Students,
+				new NotExpression(union));
+		Reasoner reasoner = new Reasoner(tBox, query);
+		assertAnswer("students is equivalent to undergrad or grad?", true,
+				reasoner.queryIsValid());
+
+	}
+
+	public static void testGreaterthanequal() {
+		TBox tbox = new TBox();
+		ConceptExpression undergrad = new ConceptExpression("Undergrad");
+		ConceptExpression courses = new ConceptExpression("Courses");
+		GreaterThanOrEqualToExpression greater = new GreaterThanOrEqualToExpression(
+				"takes", 3);
+		Set<Expression> subExpressions = new HashSet<>();
+		subExpressions.add(greater);
+		tbox.put(undergrad, subExpressions);
+		SubsumptionEquivalence query = new SubsumptionEquivalence(undergrad,
+				new NotExpression(greater));
+		Reasoner reasoner = new Reasoner(tbox, query);
+		assertAnswer("Undergrad can take atleat 3 courses?", true,
+				reasoner.queryIsValid());
+
+	}
+
+	public static void testlessthanequal() {
+		TBox tbox = new TBox();
+		ConceptExpression grad = new ConceptExpression("Grad");
+		ConceptExpression courses = new ConceptExpression("Courses");
+		LessThanOrEqualToExpression lesser = new LessThanOrEqualToExpression(
+				"takes", 3);
+		Set<Expression> subExpressions = new HashSet<>();
+		subExpressions.add(lesser);
+		tbox.put(grad, subExpressions);
+		SubsumptionEquivalence query = new SubsumptionEquivalence(grad,
+				new NotExpression(lesser));
+		Reasoner reasoner = new Reasoner(tbox, query);
+		assertAnswer("Graduates can take atmost 3 courses?", true,
+				reasoner.queryIsValid());
+
+	}
+
 	public static void BritishersCarryUmbrella() {
 		TBox tBox = new TBox();
 		ConceptExpression british = new ConceptExpression("British");
@@ -220,7 +300,7 @@ public class ReasonerTest {
 		TBox tbox = new TBox();
 		ConceptExpression man = new ConceptExpression("MAN");
 		ConceptExpression rich = new ConceptExpression("RICH");
-		IntersectExpression richAndMan = new IntersectExpression(rich, man);
+		AndExpression richAndMan = new AndExpression(rich, man);
 		ConceptExpression richMan = new ConceptExpression("RICH_MAN");
 		// Richman is equal to richAndMan
 		Set<Expression> richManExpressions = new HashSet<>();
@@ -228,7 +308,7 @@ public class ReasonerTest {
 		tbox.put(richMan, richManExpressions);
 
 		ConceptExpression richWoman = new ConceptExpression("RICH_WOMAN");
-		IntersectExpression richAndNotRichMan = new IntersectExpression(rich,
+		AndExpression richAndNotRichMan = new AndExpression(rich,
 				new NotExpression(richAndMan));
 		// Richwoman is equal to rich and not richMan
 		Set<Expression> richWomanExpressions = new HashSet<>();
