@@ -1,6 +1,6 @@
 package reasoner;
 
-import reasoner.expressions.ExistentialExpression;
+import reasoner.expressions.ExistentialUniversalExpression;
 import reasoner.expressions.Expression;
 
 import java.util.Collections;
@@ -82,17 +82,17 @@ public class Reasoner {
     int originalSize = expressions.size();
     Set<Expression> newExpressions = new HashSet<>();
     for (Expression expression : expressions) {
-      if (expression instanceof ExistentialExpression) {
-        ExistentialExpression existentialExpression = (ExistentialExpression) expression;
+      if (expression instanceof ExistentialUniversalExpression) {
+        ExistentialUniversalExpression existentialUniversalExpression = (ExistentialUniversalExpression) expression;
         Set<Expression> newExpressions2 = new HashSet<>();
-        for (Expression e : existentialExpression.expressions) {
+        for (Expression e : existentialUniversalExpression.expressions) {
           Set<Expression> fromTbox = tbox.get(e);
           if (fromTbox == null) {
             fromTbox = Collections.EMPTY_SET;
           }
           newExpressions2.addAll(fromTbox);
         }
-        existentialExpression.addConcepts(newExpressions2);
+        existentialUniversalExpression.addConcepts(newExpressions2);
       } else {
         Set<Expression> equivalentOrSubsumptions = tbox.get(expression);
         if (equivalentOrSubsumptions == null) {

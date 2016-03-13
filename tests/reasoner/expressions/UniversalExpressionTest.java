@@ -7,20 +7,20 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-public class ExistentialExpressionTest {
+public class UniversalExpressionTest {
 
   @Test
   public void testEquals() throws Exception {
-    ExistentialExpression goToBar = new ExistentialExpression("goTo", new ConceptExpression("bar"));
-    ExistentialExpression goToBar2 = new ExistentialExpression("goTo", new ConceptExpression("bar"));
+    UniversalExpression goToBar = new UniversalExpression("goTo", new ConceptExpression("bar"));
+    UniversalExpression goToBar2 = new UniversalExpression("goTo", new ConceptExpression("bar"));
 
     assertEquals(goToBar, goToBar2);
   }
 
   @Test
   public void testContradiction() throws Exception {
-    ExistentialExpression goToBar = new ExistentialExpression("goTo", new ConceptExpression("bar"));
-    ExistentialExpression goToNotBar = new ExistentialExpression("goTo", new NotExpression(new ConceptExpression("bar")));
+    UniversalExpression goToBar = new UniversalExpression("goTo", new ConceptExpression("bar"));
+    UniversalExpression goToNotBar = new UniversalExpression("goTo", new NotExpression(new ConceptExpression("bar")));
 
     assertFalse(goToBar.contradicts(goToBar));
     assertTrue(goToBar.contradicts(goToNotBar));
@@ -35,9 +35,9 @@ public class ExistentialExpressionTest {
   }
 
   @Test
-  public void testContradictsUniversalExpression() {
-    ExistentialExpression goToBar = new ExistentialExpression("goTo", new ConceptExpression("bar"));
-    UniversalExpression goToNotBar = new UniversalExpression("goTo", new NotExpression(new ConceptExpression("bar")));
+  public void testContradictsExistentialExpression() {
+    UniversalExpression goToBar = new UniversalExpression("goTo", new ConceptExpression("bar"));
+    ExistentialExpression goToNotBar = new ExistentialExpression("goTo", new NotExpression(new ConceptExpression("bar")));
 
     assertFalse(goToBar.contradicts(goToBar));
     assertTrue(goToBar.contradicts(goToNotBar));
