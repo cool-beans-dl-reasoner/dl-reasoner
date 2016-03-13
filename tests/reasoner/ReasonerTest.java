@@ -159,15 +159,15 @@ public class ReasonerTest {
     Expression killer = new ConceptExpression("KILLER");
     Expression allergicToNut = new ExistentialExpression("allgericTo", nut);
 
-    SubsumptionEquivalence johnIsBritish = new SubsumptionEquivalence(john, british);
-    SubsumptionEquivalence britishTalksAboutWeather = new SubsumptionEquivalence(british, talksAboutWeather);
-    SubsumptionEquivalence britishCarriesUmbrella = new SubsumptionEquivalence(british, carriesUmbrella);
-    SubsumptionEquivalence johnAllEatsNotIceCream = new SubsumptionEquivalence(john, allEatsNotIceCream);
-    SubsumptionEquivalence johnEatsPistachios = new SubsumptionEquivalence(john, eatsPistachios);
-    SubsumptionEquivalence pistachiosSubsetNotFruit = new SubsumptionEquivalence(pistachios, new NotExpression(fruit));
-    SubsumptionEquivalence pistachiosSubsetNut = new SubsumptionEquivalence(pistachios, nut);
-    SubsumptionEquivalence killerAllergicToNut = new SubsumptionEquivalence(killer, allergicToNut);
-    SubsumptionEquivalence killerSubsetBritish = new SubsumptionEquivalence(killer, british);
+    Subsumption johnIsBritish = new Subsumption(john, british);
+    Subsumption britishTalksAboutWeather = new Subsumption(british, talksAboutWeather);
+    Subsumption britishCarriesUmbrella = new Subsumption(british, carriesUmbrella);
+    Subsumption johnAllEatsNotIceCream = new Subsumption(john, allEatsNotIceCream);
+    Subsumption johnEatsPistachios = new Subsumption(john, eatsPistachios);
+    Subsumption pistachiosSubsetNotFruit = new Subsumption(pistachios, new NotExpression(fruit));
+    Subsumption pistachiosSubsetNut = new Subsumption(pistachios, nut);
+    Subsumption killerAllergicToNut = new Subsumption(killer, allergicToNut);
+    Subsumption killerSubsetBritish = new Subsumption(killer, british);
 
     TBox tbox = new TBox();
     tbox.add(johnIsBritish);
