@@ -10,11 +10,6 @@ public class IntersectUnionExpression extends Expression {
   }
 
   @Override
-  public String toString() {
-    return lhs.toString() + " AND " + rhs.toString();
-  }
-
-  @Override
   public boolean contradicts(Expression other) {
     if (other instanceof NotExpression) {
       return other.contradicts(lhs) || other.contradicts(rhs);
