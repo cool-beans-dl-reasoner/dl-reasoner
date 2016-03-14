@@ -60,7 +60,7 @@ public class Parser {
         List<String> concept = expression.subList(INDEX_OF_UE_CONCEPT, expression.size());
 
         String first = concept.get(0);
-        Expression expr = null;
+        Expression expr;
 
         if (first.equals("not")) {
           expr = new NotExpression(new ConceptExpression(concept.get(1)));
@@ -74,21 +74,47 @@ public class Parser {
           return new UniversalExpression(role, expr);
         }
       }
+      else if (keyword.equals("lessthanorequalto")) {
+        return new LessThanOrEqualToExpression(expression.get(3),
+                Integer.parseInt(expression.get(1)));
+      }
+      else if (keyword.equals("greaterthanorequalto")) {
+        return new GreaterThanOrEqualToExpression(expression.get(3),
+                Integer.parseInt(expression.get(1)));
+      }
+      else {
+        String first = expression.get(0);
+
+        if (first.equals("not")) {
+          return new NotExpression(new ConceptExpression(expression.get(1)));
+        } else {
+          return new ConceptExpression(first);
+        }
+      }
     }
     else {
-      Expression lhs = parse(expression.subList(0, unionIndex));
-      Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
-
       if (unionIndex == DOES_NOT_EXIST) {
+        Expression lhs = parse(expression.subList(0, intersectIndex));
+        Expression rhs = parse(expression.subList(intersectIndex + 1, expression.size()));
+
         return new IntersectExpression(lhs, rhs);
       }
       else if (intersectIndex == DOES_NOT_EXIST) {
+        Expression lhs = parse(expression.subList(0, unionIndex));
+        Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
+
         return new UnionExpression(lhs, rhs);
       }
       else if (intersectIndex < unionIndex) {
+        Expression lhs = parse(expression.subList(0, intersectIndex));
+        Expression rhs = parse(expression.subList(intersectIndex + 1, expression.size()));
+
         return new IntersectExpression(lhs, rhs);
       }
       else if (unionIndex < intersectIndex) {
+        Expression lhs = parse(expression.subList(0, unionIndex));
+        Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
+
         return new UnionExpression(lhs, rhs);
       }
     }
