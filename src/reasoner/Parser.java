@@ -80,20 +80,15 @@ public class Parser {
       Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
 
       if (unionIndex == DOES_NOT_EXIST) {
-        System.out.println("first");
         return new IntersectExpression(lhs, rhs);
       }
       else if (intersectIndex == DOES_NOT_EXIST) {
-        System.out.println("second");
         return new UnionExpression(lhs, rhs);
       }
       else if (intersectIndex < unionIndex) {
-        System.out.println("third");
         return new IntersectExpression(lhs, rhs);
       }
       else if (unionIndex < intersectIndex) {
-        System.out.println("third");
-
         return new UnionExpression(lhs, rhs);
       }
     }
