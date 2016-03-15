@@ -1,33 +1,42 @@
 package reasoner.expressions;
 
 /**
- * IntersectUnionExpression is the abstract class that 
- * {@class IntersectExpression} and {@class UnionExpression} will inherit from.
- * 
+ * ForAllExpression represents the for all expression in description logic
+ *
  * @author Brian Fung
  * @author Jon Miranda
  * @author Sravani Mudduluru
  * @author Siavash Rezaie
  */
-public class IntersectUnionExpression extends Expression {
+public class ForAllExpression extends Expression {
   public Expression lhs;
   public Expression rhs;
 
  /**
-  * Returns IntersectUnionExpression that represent the leff-hand and right-hand
+  * Returns ForAllExpression that represent the left-hand and right-hand
   * expressions
   *
   * @param lhs the expression on the left-hand side of the dot
   * @param rhs the expression on the right-hand side of the dot
-  * @return        the ExistentialExpression that represents the concept
+  * @return        the ForAllExpression that represents the concept
   */
-  public IntersectUnionExpression(Expression lhs, Expression rhs) {
+  public ForAllExpression(Expression lhs, Expression rhs) {
     this.lhs = lhs;
     this.rhs = rhs;
   }
 
  /**
-  * Returns whether two expressions contradict each other.  
+  * Returns the left-hand expression and the right-hand expression as a String
+  *
+  * @return the left-hand expression and the right-hand expression as a String
+  */
+  @Override
+  public String toString() {
+    return lhs.toString() + " AND " + rhs.toString();
+  }
+
+ /**
+  * Returns whether two expressions contradict each other  
   *
   * @param other the other expression to test whether this expression and the 
   *              other expression contradicts
@@ -35,7 +44,8 @@ public class IntersectUnionExpression extends Expression {
   */
   @Override
   public boolean contradicts(Expression other) {
-    if (other instanceof NotExpression) {
+    if (other instanceof ForAllExpression ||
+        other instanceof ExistExpression) {
       return other.contradicts(lhs) || other.contradicts(rhs);
     }
     return super.contradicts(other);
