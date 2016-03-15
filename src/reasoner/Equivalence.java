@@ -12,6 +12,11 @@ import reasoner.expressions.Expression;
  *
  * Whereas TBox for "RICH_MAN subsumption MAN and RICH" should look like:
  * RICH_MAN => [MAN and RICH]
+ *
+ * @author Brian Fung
+ * @author Jon Miranda
+ * @author Sravani Mudduluru
+ * @author Siavash Rezaie
  */
 public class Equivalence extends SubsumptionEquivalence {
 
