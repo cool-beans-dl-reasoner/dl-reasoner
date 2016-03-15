@@ -21,7 +21,7 @@ public class ExistentialUniversalExpression extends Expression {
   * Returns ExistentialUniversalExpression that represent the concept 
   *
   * @param role    
-  * @param concept the concept that the ExistensialExpression will represent
+  * @param concept the concept that the ExistentialUniversalExpression will represent
   * @return        the ExistentialUniversalExpression that 
   *                represents the concept
   */
