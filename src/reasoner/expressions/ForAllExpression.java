@@ -13,7 +13,7 @@ public class ForAllExpression extends Expression {
   public Expression rhs;
 
  /**
-  * Returns ForAllExpression that represent the leff-hand and right-hand
+  * Returns ForAllExpression that represent the left-hand and right-hand
   * expressions
   *
   * @param lhs the expression on the left-hand side of the dot
