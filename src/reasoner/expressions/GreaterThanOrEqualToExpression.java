@@ -3,7 +3,7 @@ package reasoner.expressions;
 import java.util.Set;
 
 /**
- * GreaterThanEqualLessThanEqualExpression is the abstract class for both
+ * GreaterThanOrEqualToExpression is the abstract class for both
  * {@class ExistentialExpression} and {@class UniversalExpression}. 
  * 
  * @author Brian Fung
@@ -12,15 +12,18 @@ import java.util.Set;
  * @author Siavash Rezaie
  */
 public class GreaterThanOrEqualToExpression 
-  extends GreaterThanEqualLessThanEqualExpression {
+  extends GreaterThanOrEqualToExpression {
 
  /**
-  * Returns GreaterThanEqualLessThanEqualExpression that represent the concept 
+  * Returns GreaterThanOrEqualToExpression that represent the concept 
+  * greater than or equal to
+  * 
+  * e.g. "<= 2.goto" where goto is the role and 2 is the count
   *
   * @param role    
-  * @param concept the concept that the GreaterThanEqualLessThanEqualExpression 
+  * @param concept the concept that the GreaterThanOrEqualToExpression 
   *                will represent
-  * @return        the GreaterThanEqualLessThanEqualExpression that 
+  * @return        the GreaterThanOrEqualToExpression that 
   *                represents the concept
   */
   public GreaterThanOrEqualToExpression(String role, int count) {
