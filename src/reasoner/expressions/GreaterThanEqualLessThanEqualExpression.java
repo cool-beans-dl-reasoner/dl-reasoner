@@ -3,10 +3,6 @@ package reasoner.expressions;
 import java.util.Set;
 
 /**
- * ExistentialUniversalExpression is super class to both
- * {@class ExistentialExpression} and {@class UniversalExpression}.
- * It adds base functionality that is common to both of the classes.
- * 
  * GreaterThanEqualLessThanEqualExpression is the abstract class for both
  * {@class ExistentialExpression} and {@class UniversalExpression}. 
  * 
