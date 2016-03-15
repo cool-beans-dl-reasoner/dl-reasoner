@@ -36,7 +36,7 @@ public class ForAllExpression extends Expression {
   }
 
  /**
-  * Returns whether two concept expressions contradict each other  
+  * Returns whether two expressions contradict each other  
   *
   * @param other the other expression to test whether this expression and the 
   *              other expression contradicts
