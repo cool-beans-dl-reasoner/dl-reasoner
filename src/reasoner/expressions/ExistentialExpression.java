@@ -3,16 +3,19 @@ package reasoner.expressions;
 import java.util.HashSet;
 
 /**
- * ExistentialExpression is in the DL dialect that connects a "Role" with a "Concept".
+ * ExistentialExpression is in the DL dialect that connects a 
+ * "Role" with a "Concept".
  *
  * Here Role is defined as a structure. The way we model "Concept" is a set
  * of Expressions, and this makes it easier to determine if contradictions exist.
  *
  * Example usage:
  *
- * ExistentialExpression goToBar = new ExistentialExpression("goTo", new ConceptExpression("BAR"));
+ * ExistentialExpression goToBar = 
+ *      new ExistentialExpression("goTo", new ConceptExpression("BAR"));
  *
- * If for instance, we have BAR equivalent PUB, we can use {@method addConcept} to add PUB to the list of expressions.
+ * If for instance, we have BAR equivalent PUB, we can use {@method addConcept} 
+ * to add PUB to the list of expressions.
  * 
  * @author Brian Fung
  * @author Jon Miranda
