@@ -7,6 +7,13 @@ package reasoner.expressions;
  * 
  * Every subclass needs to override contradicts method, equals method, and 
  * hashcode method.
+ *
+ * @author Brian Fung
+ * @author Jon Miranda
+ * @author Sravani Mudduluru
+ * @author Siavash Rezaie
+ */
+
  */
 public abstract class Expression {
 
