@@ -13,8 +13,6 @@ package reasoner.expressions;
  * @author Sravani Mudduluru
  * @author Siavash Rezaie
  */
-
- */
 public abstract class Expression {
 
   public boolean contradicts(Expression other) {
