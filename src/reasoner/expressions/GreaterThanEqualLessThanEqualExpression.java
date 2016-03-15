@@ -15,6 +15,15 @@ public abstract class GreaterThanEqualLessThanEqualExpression extends Expression
   public String role;
   public int count;
 
+ /**
+  * Returns GreaterThanEqualLessThanEqualExpression that represent the concept 
+  *
+  * @param role    
+  * @param concept the concept that the GreaterThanEqualLessThanEqualExpression 
+  *                will represent
+  * @return        the GreaterThanEqualLessThanEqualExpression that 
+  *                represents the concept
+  */
   public GreaterThanEqualLessThanEqualExpression(String role, int count) {
     this.role = role;
     this.count = count;
