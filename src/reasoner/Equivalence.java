@@ -15,6 +15,14 @@ import reasoner.expressions.Expression;
  */
 public class Equivalence extends SubsumptionEquivalence {
 
+ /**
+  * Returns Equivalence that represent the left-hand and right-hand
+  * expressions
+  *
+  * @param lhs the expression on the left-hand side of the dot
+  * @param rhs the expression on the right-hand side of the dot
+  * @return        the Equivalence that represents the concept
+  */
   public Equivalence(Expression lhs, Expression rhs) {
     super(lhs, rhs);
   }
