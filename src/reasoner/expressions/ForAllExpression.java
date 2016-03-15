@@ -13,12 +13,13 @@ public class ForAllExpression extends Expression {
   public Expression rhs;
 
  /**
-  * Returns ForAllExpressions that represent the leff-hand and right-hand
+  * Returns ForAllExpression that represent the leff-hand and right-hand
   * expressions
   *
   * @param lhs the expression on the left-hand side of the dot
   * @param rhs the expression on the right-hand side of the dot
-  * @return        the ExistentialExpression that represents the concept
+  * @return        the ForAllExpression with the left-hand side 
+  *                and right-hand side
   */
   public ForAllExpression(Expression lhs, Expression rhs) {
     this.lhs = lhs;
