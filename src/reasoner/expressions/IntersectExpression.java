@@ -11,7 +11,7 @@ package reasoner.expressions;
 public class IntersectExpression extends IntersectUnionExpression {
 
  /**
-  * Returns Subsumption that contains the left-hand expression and the 
+  * Returns IntersectExpression that contains the left-hand expression and the 
   * right-hand expression split by the intersect
   *
   * @param lhs the expression on the left-hand side of the intersect
