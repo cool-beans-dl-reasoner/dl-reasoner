@@ -15,6 +15,13 @@ package reasoner.expressions;
  */
 public abstract class Expression {
 
+ /**
+  * Returns whether two expressions contradict each other  
+  *
+  * @param other the other expression to test whether this expression and the 
+  *              other expression contradicts
+  * @return      whether the two expressions contradicts
+  */
   public boolean contradicts(Expression other) {
     if (other instanceof NotExpression) {
       return other.contradicts(this);
