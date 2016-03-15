@@ -16,7 +16,7 @@ public class IntersectExpression extends IntersectUnionExpression {
   *
   * @param lhs the expression on the left-hand side of the dot
   * @param rhs the expression on the right-hand side of the dot
-  * @return        the ExistentialExpression that represents the concept
+  * @return        the IntersectExpression that represents the concept
   */
   public IntersectExpression(Expression lhs, Expression rhs) {
     super(lhs, rhs);
