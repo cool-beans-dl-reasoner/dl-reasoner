@@ -3,8 +3,8 @@ package reasoner.expressions;
 import java.util.Set;
 
 /**
- * GreaterThanOrEqualToExpression is the abstract class for both
- * {@class ExistentialExpression} and {@class UniversalExpression}. 
+ * GreaterThanOrEqualToExpression represents greater than or equal to in
+ * description logic
  * 
  * @author Brian Fung
  * @author Jon Miranda
