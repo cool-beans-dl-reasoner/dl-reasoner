@@ -16,8 +16,7 @@ public class UnionExpression extends IntersectUnionExpression {
   *
   * @param lhs the expression on the left-hand side of the dot
   * @param rhs the expression on the right-hand side of the dot
-  * @return        the UnionExpression with the left-hand side 
-  *                and right-hand side
+  * @return        the UnionExpression that represents the concept
   */
   public UnionExpression(Expression lhs, Expression rhs) {
     super(lhs, rhs);
