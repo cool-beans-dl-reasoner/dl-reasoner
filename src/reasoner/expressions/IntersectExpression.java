@@ -11,11 +11,11 @@ package reasoner.expressions;
 public class IntersectExpression extends IntersectUnionExpression {
 
  /**
-  * Returns IntersectExpression that represent the left-hand and right-hand
-  * expressions
+  * Returns Subsumption that contains the left-hand expression and the 
+  * right-hand expression split by the intersect
   *
-  * @param lhs the expression on the left-hand side of the dot
-  * @param rhs the expression on the right-hand side of the dot
+  * @param lhs the expression on the left-hand side of the intersect
+  * @param rhs the expression on the right-hand side of the intersect
   * @return        the IntersectExpression that represents the concept
   */
   public IntersectExpression(Expression lhs, Expression rhs) {
