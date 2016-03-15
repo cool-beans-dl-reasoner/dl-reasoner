@@ -1,7 +1,12 @@
 package reasoner.expressions;
 
 /**
- * Every subclass needs to override contradicts method, equals method, and hashcode method.
+ * Expression is the superclass that all other Expression classes will inherit 
+ * from. This holds only one method, contradicts, that all other classes will
+ * override. 
+ * 
+ * Every subclass needs to override contradicts method, equals method, and 
+ * hashcode method.
  */
 public abstract class Expression {
 
