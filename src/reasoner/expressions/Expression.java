@@ -4,6 +4,12 @@ package reasoner.expressions;
  * Expression is the superclass that all other Expression classes will inherit 
  * from. This holds only one method, contradicts, that all other classes will
  * override. 
+ *
+ * This includes: 
+ * {@class ConceptExpression}, {@class NotExpression}, 
+ * {@class IntersectUnionExpression}, {@class ExistentialUniversalExpression}
+ * {@class GreaterThanEqualLessThanEqualExpression}, 
+ * {@class BottomExpression}, {@class TopExpression},
  * 
  * Every subclass needs to override contradicts method, equals method, and 
  * hashcode method.
