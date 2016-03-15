@@ -12,15 +12,23 @@ public class ForAllExpression extends Expression {
   public Expression lhs;
   public Expression rhs;
 
+ /**
+  * Returns ForAllExpressions that represent the leff-hand and right-hand
+  * expressions
+  *
+  * @param lhs the expression on the left-hand side of the dot
+  * @param rhs the expression on the right-hand side of the dot
+  * @return        the ExistentialExpression that represents the concept
+  */
   public ForAllExpression(Expression lhs, Expression rhs) {
     this.lhs = lhs;
     this.rhs = rhs;
   }
 
  /**
-  * Returns the left hand expression and the right hand expression as a String
+  * Returns the left-hand expression and the right-hand expression as a String
   *
-  * @return the left hand expression and the right hand expression as a String
+  * @return the left-hand expression and the right-hand expression as a String
   */
   @Override
   public String toString() {
