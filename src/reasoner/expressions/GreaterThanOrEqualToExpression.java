@@ -18,7 +18,7 @@ public class GreaterThanOrEqualToExpression
   * Returns GreaterThanOrEqualToExpression that represent the concept 
   * greater than or equal to
   * 
-  * e.g. "<= 2.goto" where goto is the role and 2 is the count
+  * e.g. ">= 2.goto" where goto is the role and 2 is the count
   *
   * @param role    
   * @param concept the concept that the GreaterThanOrEqualToExpression 
