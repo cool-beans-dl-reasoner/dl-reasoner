@@ -11,6 +11,12 @@ package reasoner.expressions;
 public class ConceptExpression extends Expression {
   public String concept;
 
+ /**
+  * Returns ConceptExpression that represent the concept 
+  *
+  * @param concept the concept that the ConceptExpression will represent
+  * @return        the ConceptExpression that represents the concept
+  */
   public ConceptExpression(String concept) {
     this.concept = concept;
   }
