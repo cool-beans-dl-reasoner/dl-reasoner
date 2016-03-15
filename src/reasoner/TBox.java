@@ -7,6 +7,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * TBox contains all the expressions connected to a single expression.
+ * 
+ * Example Usage:
+ * "John is rich"
+ * "John is British"
+ * The TBox will contain "John" and a set of expressions "rich" and "British"
+ * 
+ * @author Brian Fung
+ * @author Jon Miranda
+ * @author Sravani Mudduluru
+ * @author Siavash Rezaie
+ */
 public class TBox extends HashMap<Expression, Set<Expression>> {
 
   public void add(SubsumptionEquivalence subsumptionEquivalence) {
@@ -21,6 +34,11 @@ public class TBox extends HashMap<Expression, Set<Expression>> {
     put(lhs, currentRhs);
   }
 
+ /**
+  * Returns the TBox as a String
+  *
+  * @return the TBox as a String
+  */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
