@@ -18,8 +18,7 @@ public class ForAllExpression extends Expression {
   *
   * @param lhs the expression on the left-hand side of the dot
   * @param rhs the expression on the right-hand side of the dot
-  * @return        the ForAllExpression with the left-hand side 
-  *                and right-hand side
+  * @return        the ForAllExpression that represents the concept
   */
   public ForAllExpression(Expression lhs, Expression rhs) {
     this.lhs = lhs;
