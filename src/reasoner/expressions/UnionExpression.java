@@ -11,7 +11,7 @@ package reasoner.expressions;
 public class UnionExpression extends IntersectUnionExpression {
 
  /**
-  * Returns UnionExpression that represent the leff-hand and right-hand
+  * Returns UnionExpression that represent the left-hand and right-hand
   * expressions
   *
   * @param lhs the expression on the left-hand side of the dot
