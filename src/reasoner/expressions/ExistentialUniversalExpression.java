@@ -89,9 +89,9 @@ public class ExistentialUniversalExpression extends Expression {
   }
 
  /**
-  * Returns the concept as a String
+  * Returns the set of expressions as a String
   *
-  * @return the concept as a String
+  * @return the set of expressions as a String
   */
   @Override
   public String toString() {
@@ -107,7 +107,7 @@ public class ExistentialUniversalExpression extends Expression {
   }
 
   /**
-   * 
+   * Add all the concepts to the set of expressions
    * 
    * @param expressions the set of expressions to be added to another set of
    *                    of expressions
