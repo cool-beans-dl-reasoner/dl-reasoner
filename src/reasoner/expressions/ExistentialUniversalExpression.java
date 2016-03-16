@@ -7,7 +7,8 @@ import java.util.Set;
  * ExistentialUniversalExpression is super class to both
  * {@class ExistentialExpression} and {@class UniversalExpression}.
  * It adds base functionality that is common to both of the classes.
- * 
+ *
+ *
  * @author Brian Fung
  * @author Jon Miranda
  * @author Sravani Mudduluru
@@ -18,12 +19,9 @@ public class ExistentialUniversalExpression extends Expression {
   public HashSet<Expression> expressions;
 
  /**
-  * Returns ExistentialUniversalExpression that represent the concept 
+  * Constructs a new ExistentialUniversalExpression object.
   *
-  * @param role    
-  * @param concept the concept that the ExistentialUniversalExpression will represent
-  * @return        the ExistentialUniversalExpression that 
-  *                represents the concept
+  * Note: Do not use explicitly use this constructor. Construct a subclass instead.
   */
   protected ExistentialUniversalExpression(String role, Expression concept) {
     this.role = role;
@@ -38,8 +36,7 @@ public class ExistentialUniversalExpression extends Expression {
  /**
   * Returns whether two concept expressions contradict each other  
   *
-  * @param other the other expression to test whether this expression and the 
-  *              other expression contradicts
+  * @param other the other expression
   * @return      whether the two expressions contradicts
   */
   @Override
@@ -61,24 +58,17 @@ public class ExistentialUniversalExpression extends Expression {
     return false;
   }
 
- /**
-  * Returns whether two concept expressions are equal each other  
-  *
-  * @param other the other expression to test whether this expression and the 
-  *              other expression are equal
-  * @return      whether the two expressions are equal
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(Object other) {
     throw new RuntimeException("equals should be handled by subclasses ExistentialExpression or UniversalExpression");
   }
 
- /**
-  * Returns the hash code of the concept. This hash code will be used for the 
-  * hash map(s) in the TBox.
-  *
-  * @return the hash code of the concept
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int hashCode() {
     int hashCode = role.hashCode();
@@ -88,11 +78,9 @@ public class ExistentialUniversalExpression extends Expression {
     return hashCode;
   }
 
- /**
-  * Returns the set of expressions as a String
-  *
-  * @return the set of expressions as a String
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
