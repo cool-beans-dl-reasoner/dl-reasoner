@@ -1,7 +1,7 @@
 package reasoner.expressions;
 
 /**
- * NotExpression represents the not expression in description logic. 
+ * NotExpression represents the negation expression in description logic.
  *
  * @author Brian Fung
  * @author Jon Miranda
@@ -12,34 +12,25 @@ public class NotExpression extends Expression {
   public Expression expression;
 
  /**
-  * Returns NotExpression that contains the expression to be negated
+  * Constructs a new NotExpression object.
   *
   * @param expression the expression to be negated
-  * @return           the NotExpression that holds the expression to be negated
   */
   public NotExpression(Expression expression) {
     this.expression = expression;
   }
 
- /**
-  * Returns whether two expressions contradict each other  
-  *
-  * @param other the other expression to test whether this expression and the 
-  *              other expression contradicts
-  * @return      whether the two expressions contradicts
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean contradicts(Expression other) {
     return expression.equals(other);
   }
 
- /**
-  * Returns whether existential expressions are equal each other  
-  *
-  * @param other the other expression to test whether this expression and the 
-  *              other expression are equal
-  * @return      whether the two expressions are equal
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(Object other) {
     if (other instanceof NotExpression) {
@@ -48,11 +39,9 @@ public class NotExpression extends Expression {
     return super.equals(other);
   }
 
- /**
-  * Returns the not expression as a String
-  *
-  * @return the not expression as a String
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return String.format("NOT(%s)", expression);
