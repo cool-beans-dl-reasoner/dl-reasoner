@@ -7,7 +7,7 @@ import java.util.Set;
  * {@class ExistentialExpression} and {@class UniversalExpression}. 
  *
  * This class represents a general number restriction placed upon a Role in description logic.
- * 
+ *
  * @author Brian Fung
  * @author Jon Miranda
  * @author Sravani Mudduluru
