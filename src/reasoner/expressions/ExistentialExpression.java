@@ -3,19 +3,13 @@ package reasoner.expressions;
 import java.util.HashSet;
 
 /**
- * ExistentialExpression is in the DL dialect that connects a 
- * "Role" with a "Concept".
- *
- * Here Role is defined as a structure. The way we model "Concept" is a set
- * of Expressions, and this makes it easier to determine if contradictions exist.
+ * ExistentialExpression is representative of "there exists" in description logic terminology.
+ * An ExistentialExpression can be created by passing in a "Role" (represented as a String)
+ * with a "Concept" which is represented as an {@class ConceptExpression}.
  *
  * Example usage:
  *
- * ExistentialExpression goToBar = 
- *      new ExistentialExpression("goTo", new ConceptExpression("BAR"));
- *
- * If for instance, we have BAR equivalent PUB, we can use {@method addConcept} 
- * to add PUB to the list of expressions.
+ * ExistentialExpression goToBar = new ExistentialExpression("goTo", new ConceptExpression("BAR"));
  * 
  * @author Brian Fung
  * @author Jon Miranda
@@ -25,11 +19,10 @@ import java.util.HashSet;
 public class ExistentialExpression extends ExistentialUniversalExpression {
 
  /**
-  * Returns ExistentialExpression that represent the concept 
+  * Constructs a new ExistentialExpression object.
   *
-  * @param role    
-  * @param concept the concept that the ExistentialExpression will represent
-  * @return        the ExistentialExpression that represents the concept
+  * @param role The role. ie) "goTo"
+  * @param concept The concept. ie) "BAR"
   */
   public ExistentialExpression(String role, Expression concept) {
     super(role, concept);
@@ -38,8 +31,7 @@ public class ExistentialExpression extends ExistentialUniversalExpression {
  /**
   * Returns whether two existential expressions are equal each other  
   *
-  * @param other the other expression to test whether this expression and the 
-  *              other expression are equal
+  * @param other the other expression
   * @return      whether the two expressions are equal
   */
   @Override
