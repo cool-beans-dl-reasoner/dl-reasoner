@@ -209,6 +209,7 @@ public class Parser {
 
     SubsumptionEquivalence se =
             new SubsumptionEquivalence(new ConceptExpression(tokens.get(0)), convertToExpression(line));
+//    System.out.println(se.negateRhs());
     return se.negateRhs();
   }
 
