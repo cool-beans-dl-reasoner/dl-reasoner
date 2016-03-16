@@ -55,6 +55,14 @@ public class Parser {
     if (unionIndex == DOES_NOT_EXIST && intersectIndex == DOES_NOT_EXIST) {
       String keyword = expression.get(0);
 
+      if (keyword.equals("top")) {
+        return new TopExpession();
+      }
+
+      if (keyword.equals("bottom")) {
+        return new BottomExpession();
+      }
+
       if (keyword.equals("exists") || keyword.equals("forall")) {
         String role = expression.get(INDEX_OF_ROLE);
         List<String> concept = expression.subList(INDEX_OF_UE_CONCEPT, expression.size());
