@@ -21,23 +21,18 @@ import java.util.HashSet;
 public class UniversalExpression extends ExistentialUniversalExpression {
 
  /**
-  * Returns UniversalExpression that represent the concept 
+  * Constructs a new UniversalExpression.
   *
-  * @param role    
+  * @param role The role.
   * @param concept the concept that the UniversalExpression will represent
-  * @return        the UniversalExpression that represents the concept
   */
   public UniversalExpression(String role, Expression concept) {
     super(role, concept);
   }
 
- /**
-  * Returns whether two universal expressions are equal each other  
-  *
-  * @param other the other expression to test whether this expression and the 
-  *              other expression are equal
-  * @return      whether the two expressions are equal
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(Object other) {
     if (other instanceof UniversalExpression) {
