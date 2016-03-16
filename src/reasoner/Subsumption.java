@@ -21,15 +21,14 @@ import reasoner.expressions.Expression;
 public class Subsumption extends SubsumptionEquivalence {
 
  /**
-  * Returns Subsumption that contains the left-hand expression and the 
-  * right-hand expression split by subsumption or equivalence
+  * Constructs a new Subsumption object that says the lhs expression is a
+  * subsumption of the rhs expression.
   *
-  * @param lhs the expression on the left-hand side of the subsumption or 
-  *            equivalence
-  * @param rhs the expression on the right-hand side of the subsumption or 
-  *            equivalence  
-  * @return    the Subsumption that contains the left-hand expression and 
-  *            the right-hand expression
+  * For example: new Subsumption(new ConceptExpression("JOHN"), new ConceptExpression("BRITISH"));
+  * would create a subsumption that says that JOHN is a subset of BRITISH.
+  *
+  * @param lhs the lhs expression
+  * @param rhs the expression that the lhs is a subset of
   */
   public Subsumption(Expression lhs, Expression rhs) {
     super(lhs, rhs);
