@@ -12,7 +12,7 @@ import java.util.Set;
  * @author Siavash Rezaie
  */
 public class GreaterThanOrEqualToExpression 
-  extends GreaterThanOrEqualToExpression {
+  extends GreaterThanEqualLessThanEqualExpression {
 
  /**
   * Returns GreaterThanOrEqualToExpression that represent the concept 
