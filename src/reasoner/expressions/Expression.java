@@ -1,18 +1,22 @@
 package reasoner.expressions;
 
 /**
- * Expression is the superclass that all other Expression classes will inherit 
- * from. This holds only one method, contradicts, that all other classes will
- * override. 
+ * Expression is the base abstract class that all other Expression classes will extend
+ * from.
  *
- * This includes: 
- * {@class ConceptExpression}, {@class NotExpression}, 
- * {@class IntersectUnionExpression}, {@class ExistentialUniversalExpression}
- * {@class GreaterThanEqualLessThanEqualExpression}, 
- * {@class BottomExpression}, {@class TopExpression},
- * 
- * Every subclass needs to override contradicts method, equals method, and 
- * hashcode method.
+ * Known subclasses include:
+ * {@class ConceptExpression},
+ * {@class NotExpression},
+ * {@class UnionExpression},
+ * {@class IntersectionExpression},
+ * {@class IntersectUnionExpression},
+ * {@class ExistentialUniversalExpression}
+ * {@class GreaterThanEqualLessThanEqualExpression},
+ * {@class GreaterThanEqualToExpression},
+ * {@class LessThanEqualToExpression},
+ * {@class BottomExpression},
+ * {@class TopExpression},
+ *
  *
  * @author Brian Fung
  * @author Jon Miranda
@@ -22,18 +26,12 @@ package reasoner.expressions;
 public abstract class Expression {
 
  /**
-  * Returns whether two expressions contradict each other  
-  *
-  * @param other the other expression to test whether this expression and the 
-  *              other expression contradicts
-  * @return      whether the two expressions contradicts
+  * {@inheritDoc}
   */
   public boolean contradicts(Expression other) {
     if (other instanceof NotExpression) {
       return other.contradicts(this);
     }
     return false;
-    // TODO: Not sure if the above will work for all instances...
-//    throw new RuntimeException("contradicts not overrided.");
   }
 }
