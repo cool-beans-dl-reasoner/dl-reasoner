@@ -435,4 +435,22 @@ public class ReasonerTest {
     Reasoner reasoner = new Reasoner(tbox, query);
     assertAnswer("Is john subset of British?", true, reasoner.queryIsValid());
   }
+
+  @Test
+  public void testJohnSubsetCarryNotBooks() {
+    ConceptExpression john = new ConceptExpression("JOHN");
+    ConceptExpression british = new ConceptExpression("BRITISH");
+    ExistentialExpression carriesBooks = new ExistentialExpression("carries", new NotExpression(new ConceptExpression("BOOKS")));
+
+    Subsumption britishSubsetCarryNotBooks = new Subsumption(british, carriesBooks);
+    Subsumption johnSubsetBritish = new Subsumption(john, british);
+
+    TBox tbox = new TBox();
+    tbox.add(britishSubsetCarryNotBooks);
+    tbox.add(johnSubsetBritish);
+
+    Subsumption query = new Subsumption(john, new NotExpression(carriesBooks));
+    Reasoner reasoner = new Reasoner(tbox, query);
+    assertTrue(reasoner.queryIsValid());
+  }
 }
