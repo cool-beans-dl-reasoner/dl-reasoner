@@ -10,7 +10,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertFalse;
 
 public class ReasonerTest {
-  public static void assertAnswer(String query, boolean lhs, boolean rhs) {
+  public void assertAnswer(String query, boolean lhs, boolean rhs) {
     if (lhs != rhs) {
       throw new RuntimeException("Invalid answer for: " + query);
     }
@@ -197,5 +197,229 @@ public class ReasonerTest {
       Reasoner reasoner = new Reasoner(tbox, query.negateRhs());
       assertTrue(reasoner.queryIsValid());
     }
+  }
+
+  @Test
+  public void teststudents() {
+    TBox tbox = new TBox();
+    ConceptExpression undergrad = new ConceptExpression(
+        "UndergraduateStudents");
+    ConceptExpression grad = new ConceptExpression("GraduateStudents");
+    UnionExpression undergradandgrad = new UnionExpression(undergrad, grad);
+    ConceptExpression students = new ConceptExpression("Students");
+
+    // Students are equal to undergrad and grad students
+    Set<Expression> studentsExpressions = new HashSet<>();
+    studentsExpressions.add(undergradandgrad);
+    tbox.put(students, studentsExpressions);
+
+    SubsumptionEquivalence query = new SubsumptionEquivalence(students,
+        new NotExpression(undergradandgrad));
+    Reasoner reasoner = new Reasoner(tbox, query);
+    assertAnswer("Are undergrad and grad students subset of students?",
+        true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void fluffyeatsKibbles() {
+    TBox tBox = new TBox();
+    ConceptExpression fluffy = new ConceptExpression("Fluffy");
+    ConceptExpression kibbles = new ConceptExpression("Kibbles");
+    ExistentialExpression exst = new ExistentialExpression("eats", kibbles);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(exst);
+    tBox.put(fluffy, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(fluffy,
+        new NotExpression(exst));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("Fluffy eats Kibbles?", true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void JohneatsonlyFruits() {
+    TBox tBox = new TBox();
+    ConceptExpression john = new ConceptExpression("John");
+    ConceptExpression fruits = new ConceptExpression("Fruits");
+    UniversalExpression uni = new UniversalExpression("eats", fruits);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(uni);
+    tBox.put(john, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(john,
+        new NotExpression(uni));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("John eats only Fruits?", true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void fluffylikesfish() {
+    TBox tBox = new TBox();
+    ConceptExpression fluffy = new ConceptExpression("Fluffy");
+    ConceptExpression fish = new ConceptExpression("Fish");
+    ExistentialExpression exst = new ExistentialExpression("likes", fish);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(exst);
+    tBox.put(fluffy, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(fluffy,
+        new NotExpression(exst));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("Fluffy likes Fish?", true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void fluffylikesGuacomole() {
+    TBox tBox = new TBox();
+    ConceptExpression fluffy = new ConceptExpression("Fluffy");
+    ConceptExpression guacomole = new ConceptExpression("Guacomole");
+    ExistentialExpression exst = new ExistentialExpression("likes",
+        guacomole);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(exst);
+    tBox.put(fluffy, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(fluffy,
+        new NotExpression(exst));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("Fluffy likes Guacomole?", true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void BritishgotoBar() {
+    TBox tBox = new TBox();
+    ConceptExpression british = new ConceptExpression("British");
+    ConceptExpression bar = new ConceptExpression("Bar");
+    ExistentialExpression exst = new ExistentialExpression("goto", bar);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(exst);
+    tBox.put(british, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(british,
+        new NotExpression(exst));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("British go to bar?", true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void JohnlikesIcecreams() {
+    TBox tBox = new TBox();
+    ConceptExpression john = new ConceptExpression("John");
+    ConceptExpression icecreams = new ConceptExpression("Icecreams");
+    ExistentialExpression exst = new ExistentialExpression("likes",
+        icecreams);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(exst);
+    tBox.put(john, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(john,
+        new NotExpression(exst));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("John likes Icecreams?", true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void testfluffywithunion() {
+    TBox tBox = new TBox();
+    ConceptExpression fluffy = new ConceptExpression("Fluffy");
+    ConceptExpression fish = new ConceptExpression("Fish");
+    ConceptExpression guacomole = new ConceptExpression("Guacomole");
+    UnionExpression union = new UnionExpression(fish, guacomole);
+
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(union);
+    tBox.put(fluffy, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(fluffy,
+        new NotExpression(union));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("Fluffy likes Fish or Guacomole?", true,
+        reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void teststudentswithunion() {
+    TBox tBox = new TBox();
+    ConceptExpression Students = new ConceptExpression("Students");
+    ConceptExpression undergrad = new ConceptExpression("Undergrad");
+    ConceptExpression grad = new ConceptExpression("Grad");
+    UnionExpression union = new UnionExpression(undergrad, grad);
+
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(union);
+    tBox.put(Students, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(Students,
+        new NotExpression(union));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("students is equivalent to undergrad or grad?", true,
+        reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void testGreaterthanequal() {
+    TBox tbox = new TBox();
+    ConceptExpression undergrad = new ConceptExpression("Undergrad");
+    ConceptExpression courses = new ConceptExpression("Courses");
+    GreaterThanOrEqualToExpression greater = new GreaterThanOrEqualToExpression(
+        "takes", 3);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(greater);
+    tbox.put(undergrad, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(undergrad,
+        new NotExpression(greater));
+    Reasoner reasoner = new Reasoner(tbox, query);
+    assertAnswer("Undergrad can take atleat 3 courses?", true,
+        reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void testlessthanequal() {
+    TBox tbox = new TBox();
+    ConceptExpression grad = new ConceptExpression("Grad");
+    ConceptExpression courses = new ConceptExpression("Courses");
+    LessThanOrEqualToExpression lesser = new LessThanOrEqualToExpression(
+        "takes", 3);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(lesser);
+    tbox.put(grad, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(grad,
+        new NotExpression(lesser));
+    Reasoner reasoner = new Reasoner(tbox, query);
+    assertAnswer("Graduates can take atmost 3 courses?", true,
+        reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void BritishersCarryUmbrella() {
+    TBox tBox = new TBox();
+    ConceptExpression british = new ConceptExpression("British");
+    ConceptExpression umbrella = new ConceptExpression("Umbrella");
+    ExistentialExpression exst = new ExistentialExpression("carry",
+        umbrella);
+    Set<Expression> subExpressions = new HashSet<>();
+    subExpressions.add(exst);
+    tBox.put(british, subExpressions);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(british,
+        new NotExpression(exst));
+    Reasoner reasoner = new Reasoner(tBox, query);
+    assertAnswer("British carry umbrellas?", true, reasoner.queryIsValid());
+
+  }
+
+  @Test
+  public void testjohnIsSubsetofBritish() {
+    TBox tbox = new TBox();
+    ConceptExpression john = new ConceptExpression("John");
+    ConceptExpression british = new ConceptExpression("British");
+    Subsumption johnSubsetBritish = new Subsumption(john, british);
+    tbox.add(johnSubsetBritish);
+    SubsumptionEquivalence query = new SubsumptionEquivalence(john,
+        new NotExpression(british));
+    Reasoner reasoner = new Reasoner(tbox, query);
+    assertAnswer("Is john subset of British?", true, reasoner.queryIsValid());
   }
 }
