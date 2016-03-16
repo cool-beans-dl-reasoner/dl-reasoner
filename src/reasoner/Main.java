@@ -1,7 +1,6 @@
 package reasoner;
 
 import reasoner.tests.ParserTest;
-import reasoner.tests.ReasonerTest;
 
 import java.util.Scanner;
 
@@ -23,34 +22,15 @@ public class Main {
 	 * Helper method that runs the tests. These tests will be moved to JUnit.
 	 */
 	public static void runTests() {
-    ReasonerTest.testManIsSubsetOfPerson();
-    ReasonerTest.testAnimalSubsetOfPerson();
-    ReasonerTest.testRichMan();
-    ReasonerTest.teststudents();
-    ReasonerTest.fluffyeatsKibbles();
-    ReasonerTest.fluffylikesfish();
-    ReasonerTest.fluffylikesGuacomole();
-    ReasonerTest.testRichWoman();
-    ReasonerTest.BritishgotoBar();
-    ReasonerTest.JohnlikesIcecreams();
-    ReasonerTest.BritishersCarryUmbrella();
-    ReasonerTest.testjohnIsSubsetofBritish();
-    ReasonerTest.testRichWoman();
-    ReasonerTest.JohneatsonlyFruits();
-
     ParserTest.testRichMan();
     ParserTest.testRichWoman();
     ParserTest.testStudents();
     ParserTest.testcowissubsetofAnimal();
-
     ParserTest.fluffyeatsKibbles();
     ParserTest.fluffylikesfish();
     ParserTest.fluffylikesGuacomole();
     ParserTest.BritishgotoBar();
     ParserTest.JohneatsonlyFruits();
-    ReasonerTest.teststudentswithunion();
-    ReasonerTest.testGreaterthanequal();
-    ReasonerTest.testlessthanequal();
 	}
 
   /**
@@ -84,7 +64,7 @@ public class Main {
     // Build Query
     System.out.print("Enter query on a single line: " );
     String line = input.nextLine();
-    SubsumptionEquivalence query = parser.parseQuery(line);
+    SubsumptionEquivalence query = null; // parser.parseQuery(line);
 
     System.out.println("Reasoning...");
     Reasoner reasoner = new Reasoner(parser.tbox, query);
