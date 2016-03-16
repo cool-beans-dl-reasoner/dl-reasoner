@@ -30,6 +30,13 @@ public class TBox extends HashMap<Expression, Set<Expression>> {
     return rhs;
   }
 
+  /**
+   * Adds a new Subsumption or Equivalence to the TBox.
+   *
+   * If adding "JOHN subsumption BRITISH", then the TBox will have JOHN => BRITISH.
+   * However, if adding "JOHN equivalent BRITISH", then the TBox will also have BRITISH => JOHN.
+   * @param subsumptionEquivalence The new subsumption or equivalence to add.
+   */
   public void add(SubsumptionEquivalence subsumptionEquivalence) {
     Expression lhs = subsumptionEquivalence.lhs;
     Expression rhs = subsumptionEquivalence.rhs;
@@ -46,9 +53,7 @@ public class TBox extends HashMap<Expression, Set<Expression>> {
   }
 
  /**
-  * Returns the TBox as a String
-  *
-  * @return the TBox as a String
+  * {@inheritDoc}
   */
   @Override
   public String toString() {
