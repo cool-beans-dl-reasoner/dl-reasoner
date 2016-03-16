@@ -23,13 +23,13 @@ public class GreaterThanOrEqualToExpressionTest {
     tbox.add(johnGoToSchool);
     System.out.println(tbox);
 
-    GreaterThanEqualLessThanEqualExpression goToAtLeastOneThing = new GreaterThanOrEqualToExpression("goTo", 1);
+    NumberRestrictionExpression goToAtLeastOneThing = new GreaterThanOrEqualToExpression("goTo", 1);
     assertTrue(goToAtLeastOneThing.contradicts(tbox.get(john)));
 
     LessThanOrEqualToExpression goToAtMostThreeThings = new LessThanOrEqualToExpression("goTo", 3);
     assertTrue(goToAtMostThreeThings.contradicts(tbox.get(john)));
 
-    GreaterThanEqualLessThanEqualExpression goToAtLeastThreeThings = new GreaterThanOrEqualToExpression("goTo", 3);
+    NumberRestrictionExpression goToAtLeastThreeThings = new GreaterThanOrEqualToExpression("goTo", 3);
     assertFalse(goToAtLeastThreeThings.contradicts(tbox.get(john)));
   }
 }

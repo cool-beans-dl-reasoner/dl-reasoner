@@ -7,7 +7,7 @@ import reasoner.TBox;
 
 import static org.junit.Assert.assertTrue;
 
-public class GreaterThanEqualLessThanEqualExpressionTest {
+public class NumberRestrictionExpressionTest {
 
   @Test
   public void testReasonerHandling() {

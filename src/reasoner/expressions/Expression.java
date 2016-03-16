@@ -11,7 +11,7 @@ package reasoner.expressions;
  * {@class IntersectionExpression},
  * {@class IntersectUnionExpression},
  * {@class ExistentialUniversalExpression}
- * {@class GreaterThanEqualLessThanEqualExpression},
+ * {@class NumberRestrictionExpression},
  * {@class GreaterThanEqualToExpression},
  * {@class LessThanEqualToExpression},
  * {@class BottomExpression},
