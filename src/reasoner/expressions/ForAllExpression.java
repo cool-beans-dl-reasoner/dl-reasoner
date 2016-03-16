@@ -45,7 +45,7 @@ public class ForAllExpression extends Expression {
   @Override
   public boolean contradicts(Expression other) {
     if (other instanceof ForAllExpression ||
-        other instanceof ExistExpression) {
+        other instanceof ExistentialExpression) {
       return other.contradicts(lhs) || other.contradicts(rhs);
     }
     return super.contradicts(other);
