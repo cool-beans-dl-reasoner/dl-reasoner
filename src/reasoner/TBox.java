@@ -22,16 +22,27 @@ import java.util.Set;
  */
 public class TBox extends HashMap<Expression, Set<Expression>> {
 
+  private Set<Expression> getRhsOrNewSet(Expression key) {
+    Set<Expression> rhs = get(key);
+    if (rhs == null) {
+      rhs = new HashSet<>();
+    }
+    return rhs;
+  }
+
   public void add(SubsumptionEquivalence subsumptionEquivalence) {
     Expression lhs = subsumptionEquivalence.lhs;
     Expression rhs = subsumptionEquivalence.rhs;
 
-    Set<Expression> currentRhs = get(lhs);
-    if (currentRhs == null) {
-      currentRhs = new HashSet<>();
-    }
+    Set<Expression> currentRhs = getRhsOrNewSet(lhs);
     currentRhs.add(rhs);
     put(lhs, currentRhs);
+
+    if (subsumptionEquivalence instanceof Equivalence) {
+      Set<Expression> currentLhs = getRhsOrNewSet(rhs);
+      currentLhs.add(lhs);
+      put(rhs, currentLhs);
+    }
   }
 
  /**
