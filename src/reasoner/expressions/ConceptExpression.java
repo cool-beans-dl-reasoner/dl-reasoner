@@ -1,13 +1,11 @@
 package reasoner.expressions;
 
 /**
- * ConceptExpression represents a concept in the TBox in description logic. 
- * The ConceptExpression contains only one concept and will one of a set
- * of expressions. 
+ * ConceptExpression represents a Concept expression in description logic terminology.
  * 
  * Example usage:
  *
- * ConceptExpression concept = new ConceptExpression("Bar")
+ * ConceptExpression bar = new ConceptExpression("BAR");
  *
  * @author Brian Fung
  * @author Jon Miranda
