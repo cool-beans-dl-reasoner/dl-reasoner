@@ -53,6 +53,7 @@ public class ReasonerTest {
 
   @Test
   public void testRichMan() {
+    
     TBox tbox = new TBox();
     ConceptExpression man = new ConceptExpression("MAN");
     ConceptExpression rich = new ConceptExpression("RICH");
@@ -224,6 +225,7 @@ public class ReasonerTest {
   @Test
   public void fluffyeatsKibbles() {
     TBox tBox = new TBox();
+    //Fluffy eats Kibbles is true?
     ConceptExpression fluffy = new ConceptExpression("Fluffy");
     ConceptExpression kibbles = new ConceptExpression("Kibbles");
     ExistentialExpression exst = new ExistentialExpression("eats", kibbles);
@@ -240,6 +242,7 @@ public class ReasonerTest {
   @Test
   public void JohneatsonlyFruits() {
     TBox tBox = new TBox();
+    //Test if John eats only Fruits
     ConceptExpression john = new ConceptExpression("John");
     ConceptExpression fruits = new ConceptExpression("Fruits");
     UniversalExpression uni = new UniversalExpression("eats", fruits);
@@ -256,6 +259,7 @@ public class ReasonerTest {
   @Test
   public void fluffylikesfish() {
     TBox tBox = new TBox();
+    //Test if Fluffy likes Fish
     ConceptExpression fluffy = new ConceptExpression("Fluffy");
     ConceptExpression fish = new ConceptExpression("Fish");
     ExistentialExpression exst = new ExistentialExpression("likes", fish);
@@ -272,6 +276,7 @@ public class ReasonerTest {
   @Test
   public void fluffylikesGuacomole() {
     TBox tBox = new TBox();
+    //Test if fluffy likes Guacomole
     ConceptExpression fluffy = new ConceptExpression("Fluffy");
     ConceptExpression guacomole = new ConceptExpression("Guacomole");
     ExistentialExpression exst = new ExistentialExpression("likes",
@@ -289,6 +294,7 @@ public class ReasonerTest {
   @Test
   public void BritishgotoBar() {
     TBox tBox = new TBox();
+    //test if British go to bar with Existential Expression
     ConceptExpression british = new ConceptExpression("British");
     ConceptExpression bar = new ConceptExpression("Bar");
     ExistentialExpression exst = new ExistentialExpression("goto", bar);
@@ -305,6 +311,7 @@ public class ReasonerTest {
   @Test
   public void JohnlikesIcecreams() {
     TBox tBox = new TBox();
+    //Test If John likes Icecream with Existential Expression
     ConceptExpression john = new ConceptExpression("John");
     ConceptExpression icecreams = new ConceptExpression("Icecreams");
     ExistentialExpression exst = new ExistentialExpression("likes",
@@ -322,6 +329,7 @@ public class ReasonerTest {
   @Test
   public void testfluffywithunion() {
     TBox tBox = new TBox();
+    //Test if Fluffy likes Fish or Guacomole with Union Expression
     ConceptExpression fluffy = new ConceptExpression("Fluffy");
     ConceptExpression fish = new ConceptExpression("Fish");
     ConceptExpression guacomole = new ConceptExpression("Guacomole");
@@ -341,6 +349,7 @@ public class ReasonerTest {
   @Test
   public void teststudentswithunion() {
     TBox tBox = new TBox();
+    //Test if Students are Undergrad or grad students with uninon expression
     ConceptExpression Students = new ConceptExpression("Students");
     ConceptExpression undergrad = new ConceptExpression("Undergrad");
     ConceptExpression grad = new ConceptExpression("Grad");
@@ -360,6 +369,7 @@ public class ReasonerTest {
   @Test
   public void testGreaterthanequal() {
     TBox tbox = new TBox();
+    //Test if Undergrad students can take atleast 3 courses , use Greater than or Equal to expression
     ConceptExpression undergrad = new ConceptExpression("Undergrad");
     ConceptExpression courses = new ConceptExpression("Courses");
     GreaterThanOrEqualToExpression greater = new GreaterThanOrEqualToExpression(
@@ -378,6 +388,7 @@ public class ReasonerTest {
   @Test
   public void testlessthanequal() {
     TBox tbox = new TBox();
+    //Test if Graduate Students can take atmost 3 courses , use Leassthan or Equalto Expression
     ConceptExpression grad = new ConceptExpression("Grad");
     ConceptExpression courses = new ConceptExpression("Courses");
     LessThanOrEqualToExpression lesser = new LessThanOrEqualToExpression(
@@ -396,6 +407,7 @@ public class ReasonerTest {
   @Test
   public void BritishersCarryUmbrella() {
     TBox tBox = new TBox();
+    //Test if British carry Umbrella, use not expression for D
     ConceptExpression british = new ConceptExpression("British");
     ConceptExpression umbrella = new ConceptExpression("Umbrella");
     ExistentialExpression exst = new ExistentialExpression("carry",
@@ -413,6 +425,7 @@ public class ReasonerTest {
   @Test
   public void testjohnIsSubsetofBritish() {
     TBox tbox = new TBox();
+    //Test if John is a subset of British, use not expression for D 
     ConceptExpression john = new ConceptExpression("John");
     ConceptExpression british = new ConceptExpression("British");
     Subsumption johnSubsetBritish = new Subsumption(john, british);
