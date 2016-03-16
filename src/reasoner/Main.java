@@ -22,16 +22,16 @@ public class Main {
 	 * Helper method that runs the tests. These tests will be moved to JUnit.
 	 */
 	public static void runTests() {
-    ParserTest.testRichMan();
-    ParserTest.testRichWoman();
-    ParserTest.testStudents();
-    ParserTest.testcowissubsetofAnimal();
-    ParserTest.fluffyeatsKibbles();
-    ParserTest.fluffylikesfish();
-    ParserTest.fluffylikesGuacomole();
-    ParserTest.BritishgotoBar();
-    ParserTest.JohneatsonlyFruits();
-	}
+//    ParserTest.testRichMan();
+//    ParserTest.testRichWoman();
+//    ParserTest.testStudents();
+//    ParserTest.testcowissubsetofAnimal();
+//    ParserTest.fluffyeatsKibbles();
+//    ParserTest.fluffylikesfish();
+//    ParserTest.fluffylikesGuacomole();
+//    ParserTest.BritishgotoBar();
+//    ParserTest.JohneatsonlyFruits();
+  }
 
   /**
    * The main driver to interact with our description logic reasoner.

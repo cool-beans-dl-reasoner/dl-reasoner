@@ -48,34 +48,23 @@ public class Parser {
 
   }//end parseLine
 
+
+
   public Expression parse(List<String> expression) {
     int unionIndex = expression.indexOf("union");
     int intersectIndex = expression.indexOf("intersect");
-
     if (unionIndex == DOES_NOT_EXIST && intersectIndex == DOES_NOT_EXIST) {
       String keyword = expression.get(0);
-
       if (keyword.equals("top")) {
-        return new TopExpession();
+        return new TopExpression();
       }
-
       if (keyword.equals("bottom")) {
-        return new BottomExpession();
+        return new BottomExpression();
       }
-
       if (keyword.equals("exists") || keyword.equals("forall")) {
         String role = expression.get(INDEX_OF_ROLE);
         List<String> concept = expression.subList(INDEX_OF_UE_CONCEPT, expression.size());
-
-        String first = concept.get(0);
-        Expression expr;
-
-        if (first.equals("not")) {
-          expr = new NotExpression(new ConceptExpression(concept.get(1)));
-        } else {
-          expr = new ConceptExpression(first);
-        }
-
+        Expression expr = parse(concept);
         if (keyword.equals("exists")) {
           return new ExistentialExpression(role, expr);
         } else if (keyword.equals("forall")) {
@@ -92,130 +81,120 @@ public class Parser {
       }
       else {
         String first = expression.get(0);
-
         if (first.equals("not")) {
           return new NotExpression(new ConceptExpression(expression.get(1)));
-        } else {
+        }
+        else {
           return new ConceptExpression(first);
+        }
+      }
+    }
+    else if (unionIndex == DOES_NOT_EXIST) {
+      Expression lhs = parse(expression.subList(0, intersectIndex));
+      Expression rhs = parse(expression.subList(intersectIndex + 1, expression.size()));
+      return new IntersectExpression(lhs, rhs);
+    }
+    else if (intersectIndex == DOES_NOT_EXIST) {
+      Expression lhs = parse(expression.subList(0, unionIndex));
+      Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
+      return new UnionExpression(lhs, rhs);
+    }
+    else if (intersectIndex < unionIndex) {
+      Expression lhs = parse(expression.subList(0, intersectIndex));
+      Expression rhs = parse(expression.subList(intersectIndex + 1, expression.size()));
+      return new IntersectExpression(lhs, rhs);
+    }
+    else {
+      Expression lhs = parse(expression.subList(0, unionIndex));
+      Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
+      return new UnionExpression(lhs, rhs);
+    }
+  return null;
+  }
+
+
+
+  public String negateD(String d) {
+    int unionIndex = d.indexOf("union");
+    int intersectIndex = d.indexOf("intersect");
+
+    if (unionIndex == DOES_NOT_EXIST && intersectIndex == DOES_NOT_EXIST) {
+      String keyword = d.substring(0, d.indexOf(" ")); //get first keyword
+
+      if (keyword.equals("exists") || keyword.equals("forall")) {
+        int dotIndex = d.indexOf("dot");
+        String lhs = d.substring(0, dotIndex+2); //gets the "dot" and the space
+        String concept = d.substring(dotIndex+2, d.length());
+
+        Expression expr = negateD(concept);
+
+        d = lhs + expr;
+        if (keyword.equals("exists")) {
+          return d.replaceAll("exists", "forall");
+        }
+        else if (keyword.equals("forall")) {
+          return d.replaceAll("forall", "exists");
+        }
+      }
+      else if (keyword.equals("lessthanorequalto")) {
+        return d.replaceAll("lessthanorequalto", "greaterthanorequalto");
+      }
+      else if (keyword.equals("greaterthanorequalto")) {
+        return d.replaceAll("greaterthanorequalto", "lessthanorequalto");
+      }
+      else if (keyword.equals("top")) {
+        return d;
+      }
+      else if (keyword.equals("bottom")) {
+        return d;
+      }
+      else {
+        String first = d.substring(0, d.indexOf(" "));
+
+        if (first.equals("not")) {
+          return "not " + d;
+        }
+        else {
+          return d;
         }
       }
     }
     else {
       if (unionIndex == DOES_NOT_EXIST) {
-        Expression lhs = parse(expression.subList(0, intersectIndex));
-        Expression rhs = parse(expression.subList(intersectIndex + 1, expression.size()));
+        String lhs = negateD(d.substring(0, intersectIndex));
+        String rhs = negateD(d.substring(intersectIndex + 1, d.length()));
 
-        return new IntersectExpression(lhs, rhs);
+        return lhs + "union" + rhs;
       }
       else if (intersectIndex == DOES_NOT_EXIST) {
-        Expression lhs = parse(expression.subList(0, unionIndex));
-        Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
+        String lhs = negateD(d.substring(0, unionIndex));
+        String rhs = negateD(d.substring(unionIndex + 1, d.length()));
 
-        return new UnionExpression(lhs, rhs);
+        return lhs + "intersect" + rhs;
       }
       else if (intersectIndex < unionIndex) {
-        Expression lhs = parse(expression.subList(0, intersectIndex));
-        Expression rhs = parse(expression.subList(intersectIndex + 1, expression.size()));
+        String lhs = negateD(d.substring(0, intersectIndex));
+        String rhs = negateD(d.substring(intersectIndex + 1, d.length()));
 
-        return new IntersectExpression(lhs, rhs);
+        return lhs + "union" + rhs;
       }
       else if (unionIndex < intersectIndex) {
-        Expression lhs = parse(expression.subList(0, unionIndex));
-        Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
+        String lhs = negateD(d.substring(0, unionIndex));
+        String rhs = negateD(d.substring(unionIndex + 1, d.length()));
 
-        return new UnionExpression(lhs, rhs);
+        return lhs + "intersect" + rhs;
       }
     }
-
-    return new ConceptExpression("hi");
+    return  null;
   }
 
 
-//    else if {
-//
-//    }
-//    else {
-//      return new ConceptExpression()
-//    }
 
+  public TBox getTBox() {
+    return this.tbox;
   }
 
-//  public Expression parse(List<String> expression) {
-//    String keyword = expression.get(0);
-//    String role = expression.get(INDEX_OF_ROLE);
-//    List<String> concept = expression.subList(INDEX_OF_UE_CONCEPT, expression.size());
-//
-//    String first = concept.get(0);
-//    Expression expr = null;
-//
-//    if (first.equals("not")) {
-//      expr = new NotExpression(new ConceptExpression(concept.get(1)));
-//    } else {
-//      expr = new ConceptExpression(first);
-//    }
-//
-//    System.out.println(expression.get(0));
-//    if (keyword.equals("exists")) {
-//      return new ExistentialExpression(role, expr);
-//    }
-//    else if (keyword.equals("forall")) {
-//      return new UniversalExpression(role, expr);
-//    }
-//    else {
-//      return new ConceptExpression("not implemented");
-//    }
-//  }
-//  private Expression parse(List<String> tokens) {
-//
-//    String first = tokens.get(0);
-//    int keywordIndex = 1;
-//    NotExpression n = null;
-//
-////    todo - check for end cases
-//    if (first.equals("not")) {
-//      n = new NotExpression(new ConceptExpression(tokens.get(keywordIndex)));
-//      ++keywordIndex;
-//    }
-//
-//    String keyword = tokens.get(keywordIndex);
-//
-//    if (keyword.equals("intersect")) {
-//      if (n != null) {
-//        return new IntersectExpression(n,
-//                parse(tokens.subList(keywordIndex + 1), tokens.size()));
-//      } else {
-//        return new IntersectExpression(new ConceptExpression(tokens.get(keywordIndex - 1)),
-//                parse(tokens.subList(keywordIndex + 1), tokens.size()));
-//      }
-//    }
-//    else if (keyword.equals("union")) {
-//      if (n != null) {
-//        return new UnionExpression(n,
-//                parse(tokens.subList(keywordIndex + 1), tokens.size()));
-//      } else {
-//        return new UnionExpression(new ConceptExpression(tokens.get(keywordIndex - 1)),
-//                parse(tokens.subList(keywordIndex + 1), tokens.size()));
-//      }
-//    }
-//    else if (keyword.equals("existential")) {
-//
-//    }
-//    else if (keyword.equals("universal")) {
-//
-//    }
-//    else {
-//      return new SubsumptionEquivalence(new ConceptExpression(tokens.get(0)),
-//              parse(tokens.subList(index + 1)), tokens.size());
-//    }
-//
-//  }//end parse
-
-
-//  public TBox getTBox() {
-//    return this.tbox;
-//  }
-
-//  }
+}//end Parser
 
 
 
