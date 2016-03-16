@@ -176,7 +176,6 @@ public class ReasonerTest {
     tbox.add(britishCarriesUmbrella);
     tbox.add(johnAllEatsNotIceCream);
     tbox.add(johnEatsPistachios);
-    tbox.add(pistachiosSubsetNotFruit);
     tbox.add(pistachiosSubsetNut);
     tbox.add(killerAllergicToNut);
     tbox.add(killerSubsetBritish);
@@ -187,7 +186,6 @@ public class ReasonerTest {
         britishCarriesUmbrella,
         johnAllEatsNotIceCream,
         johnEatsPistachios,
-        pistachiosSubsetNotFruit,
         pistachiosSubsetNut,
         killerAllergicToNut,
         killerSubsetBritish,
@@ -440,17 +438,28 @@ public class ReasonerTest {
   public void testJohnSubsetCarryNotBooks() {
     ConceptExpression john = new ConceptExpression("JOHN");
     ConceptExpression british = new ConceptExpression("BRITISH");
-    ExistentialExpression carriesBooks = new ExistentialExpression("carries", new NotExpression(new ConceptExpression("BOOKS")));
+    ConceptExpression books = new ConceptExpression("BOOKS");
 
-    Subsumption britishSubsetCarryNotBooks = new Subsumption(british, carriesBooks);
+    ExistentialExpression carriesNotBooks = new ExistentialExpression("carry", new NotExpression(books));
+
+    Subsumption britishSubsetCarryNotBooks = new Subsumption(british, carriesNotBooks);
     Subsumption johnSubsetBritish = new Subsumption(john, british);
 
     TBox tbox = new TBox();
     tbox.add(britishSubsetCarryNotBooks);
     tbox.add(johnSubsetBritish);
 
-    Subsumption query = new Subsumption(john, new NotExpression(carriesBooks));
+    Subsumption query = new Subsumption(john, new NotExpression(carriesNotBooks));
+
+    Expression a = new NotExpression(carriesNotBooks);
+    Expression b = new NotExpression(new ExistentialExpression("carry", new NotExpression(new ConceptExpression("BOOKS"))));
+    assertTrue(a.equals(b));
+
     Reasoner reasoner = new Reasoner(tbox, query);
+    assertTrue(reasoner.queryIsValid());
+
+    reasoner = new Reasoner(tbox, query);
+    query = new Subsumption(john, new NotExpression(new ExistentialExpression("carry", new NotExpression(books))));
     assertTrue(reasoner.queryIsValid());
   }
 }

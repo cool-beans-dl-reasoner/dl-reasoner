@@ -1,11 +1,11 @@
 package reasoner.tests;
 
+import org.junit.Test;
 import reasoner.Parser;
-import reasoner.TBox;
-import reasoner.expressions.*;
-import reasoner.expressions.IntersectExpression;
+import reasoner.Reasoner;
+import reasoner.SubsumptionEquivalence;
 
-import java.util.Set;
+import static junit.framework.Assert.assertTrue;
 
 public class ParserTest {
 
@@ -163,5 +163,16 @@ public class ParserTest {
 		parser.parseLine("British subset exists goto dot not bar intersect greaterthanorequalto 2 dot goto union rich");
 		parser.parseLine("British subset not rich");
 		parser.parseLine("John equivalent British");
+	}
+
+	@Test
+	public void testJohnSubsetCarryNotBooks() {
+		Parser parser = new Parser();
+		parser.parseLine("JOHN subset BRITISH");
+		parser.parseLine("BRITISH subset exists carry dot not BOOKS");
+
+		SubsumptionEquivalence query = parser.parseQuery("JOHN subset exists carry dot not BOOKS");
+		Reasoner reasoner = new Reasoner(parser.getTBox(), query);
+		assertTrue(reasoner.queryIsValid());
 	}
 }

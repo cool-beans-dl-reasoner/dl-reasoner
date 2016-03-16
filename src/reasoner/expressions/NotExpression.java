@@ -17,7 +17,11 @@ public class NotExpression extends Expression {
   * @param expression the expression to be negated
   */
   public NotExpression(Expression expression) {
-    this.expression = expression;
+    if (expression instanceof NotExpression) {
+      this.expression = ((NotExpression) expression).expression;
+    } else {
+      this.expression = expression;
+    }
   }
 
   /**
@@ -26,6 +30,14 @@ public class NotExpression extends Expression {
   @Override
   public boolean contradicts(Expression other) {
     return expression.equals(other);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int hashCode() {
+    return -1 * expression.hashCode();
   }
 
   /**

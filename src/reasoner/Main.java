@@ -1,7 +1,5 @@
 package reasoner;
 
-import reasoner.tests.ParserTest;
-
 import java.util.Scanner;
 
 /**
@@ -64,7 +62,7 @@ public class Main {
     // Build Query
     System.out.print("Enter query on a single line: " );
     String line = input.nextLine();
-    SubsumptionEquivalence query = null; // parser.parseQuery(line);
+    SubsumptionEquivalence query = parser.parseQuery(line);
 
     System.out.println("Reasoning...");
     Reasoner reasoner = new Reasoner(parser.tbox, query);
