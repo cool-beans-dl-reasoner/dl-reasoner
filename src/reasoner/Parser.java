@@ -20,12 +20,16 @@ public class Parser {
   }
 
   public void parseLine(String line) {
+    addToTBox(line, convertToExpression(line));
+  }
+
+  private Expression convertToExpression(String line) {
     String[] tokens1 = line.split(" ");
     ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
 
-    if(tokens.size() < MINIMUM_AMOUNT_OF_TOKENS){
+    if(tokens.size() < MINIMUM_AMOUNT_OF_TOKENS) {
       System.out.println("not enough tokens");
-      return;
+      return null;
     }
 
     String keyword = tokens.get(1);
@@ -33,10 +37,21 @@ public class Parser {
     if(!tokens.get(1).equals("equivalent") && !tokens.get(1).equals("subset")){
       //illegal syntax
       System.out.println("Second word must be equivalent or subset");
-      return;
+      return null;
     }
 
-    Expression d = parse(tokens.subList(2, tokens.size()));
+    return parse(tokens.subList(2, tokens.size()));
+  }
+
+  private void addToTBox(String line, Expression d) {
+
+    if (d == null) {
+      return;
+    }
+    String[] tokens1 = line.split(" ");
+    ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
+    ConceptExpression c = new ConceptExpression(tokens.get(0));
+
     //check if c has already been introduced
     Set<Expression> allD = tbox.get(c);
     if (allD == null) { // C is not in the TBox
@@ -45,8 +60,7 @@ public class Parser {
     allD.add(d);
     tbox.put(c, allD);
     System.out.println(tbox);
-
-  }//end parseLine
+  }
 
 
 
@@ -126,7 +140,7 @@ public class Parser {
         String lhs = d.substring(0, dotIndex+2); //gets the "dot" and the space
         String concept = d.substring(dotIndex+2, d.length());
 
-        Expression expr = negateD(concept);
+        String expr = negateD(concept);
 
         d = lhs + expr;
         if (keyword.equals("exists")) {
@@ -189,6 +203,15 @@ public class Parser {
   }
 
 
+  public SubsumptionEquivalence parseQuery(String line) {
+    String[] tokens1 = line.split(" ");
+    ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
+
+    SubsumptionEquivalence se =
+            new SubsumptionEquivalence(new ConceptExpression(tokens.get(0)), convertToExpression(line));
+//    System.out.println(se.negateRhs());
+    return se.negateRhs();
+  }
 
   public TBox getTBox() {
     return this.tbox;
