@@ -3,6 +3,8 @@ package reasoner;
 import reasoner.tests.ParserTest;
 import reasoner.tests.ReasonerTest;
 
+import java.util.Scanner;
+
 /**
  * Main is the class that calls and runs all the test cases for parser 
  * and the reasoner.
@@ -18,39 +20,74 @@ import reasoner.tests.ReasonerTest;
 public class Main {
 
 	/**
-	 * The only method in class Main that runs the test cases for the parser
-	 * and the reasoner
-	 * 
-	 * @param args the arguments that can be passed in through command line
+	 * Helper method that runs the tests. These tests will be moved to JUnit.
 	 */
-	public static void main(String[] args) {
-		ReasonerTest.testManIsSubsetOfPerson();
-		ReasonerTest.testAnimalSubsetOfPerson();
-		ReasonerTest.testRichMan();
-		ReasonerTest.teststudents();
-		ReasonerTest.fluffyeatsKibbles();
-		ReasonerTest.fluffylikesfish();
-		ReasonerTest.fluffylikesGuacomole();
-		ReasonerTest.testRichWoman();
-		ReasonerTest.BritishgotoBar();
-		ReasonerTest.JohnlikesIcecreams();
-		ReasonerTest.BritishersCarryUmbrella();
-		ReasonerTest.testjohnIsSubsetofBritish();
-		ReasonerTest.testRichWoman();
-		ReasonerTest.JohneatsonlyFruits();
+	public static void runTests() {
+    ReasonerTest.testManIsSubsetOfPerson();
+    ReasonerTest.testAnimalSubsetOfPerson();
+    ReasonerTest.testRichMan();
+    ReasonerTest.teststudents();
+    ReasonerTest.fluffyeatsKibbles();
+    ReasonerTest.fluffylikesfish();
+    ReasonerTest.fluffylikesGuacomole();
+    ReasonerTest.testRichWoman();
+    ReasonerTest.BritishgotoBar();
+    ReasonerTest.JohnlikesIcecreams();
+    ReasonerTest.BritishersCarryUmbrella();
+    ReasonerTest.testjohnIsSubsetofBritish();
+    ReasonerTest.testRichWoman();
+    ReasonerTest.JohneatsonlyFruits();
 
-		ParserTest.testRichMan();
-		ParserTest.testRichWoman();
-		ParserTest.testStudents();
-		ParserTest.testcowissubsetofAnimal();
+    ParserTest.testRichMan();
+    ParserTest.testRichWoman();
+    ParserTest.testStudents();
+    ParserTest.testcowissubsetofAnimal();
 
-		ParserTest.fluffyeatsKibbles();
-		ParserTest.fluffylikesfish();
-		ParserTest.fluffylikesGuacomole();
-		ParserTest.BritishgotoBar();
-		ParserTest.JohneatsonlyFruits();
-		ReasonerTest.teststudentswithunion();
-		ReasonerTest.testGreaterthanequal();
-		ReasonerTest.testlessthanequal();
+    ParserTest.fluffyeatsKibbles();
+    ParserTest.fluffylikesfish();
+    ParserTest.fluffylikesGuacomole();
+    ParserTest.BritishgotoBar();
+    ParserTest.JohneatsonlyFruits();
+    ReasonerTest.teststudentswithunion();
+    ReasonerTest.testGreaterthanequal();
+    ReasonerTest.testlessthanequal();
 	}
+
+  /**
+   * The main driver to interact with our description logic reasoner.
+   * Takes in user input, builds a TBox using {@class Parser}, builds the {@class SubsumptionEquivalence} query,
+   * and reasons it through the {@class Reasoner}.
+   *
+   * Outputs the result to System.out.
+   *
+   * @param args Command line arguments. None need to be specified to run the program.
+   */
+  public static void main(String[] args) {
+    System.out.println("Enter subsumptions or equivalencies below.\n" +
+        "When done enter a single period '.'\n" +
+        "Refer to our User Manual for instructions and keywords.");
+    Scanner input = new Scanner(System.in);
+
+    boolean buildingTBox = true;
+    boolean readingQuery = false;
+
+    Parser parser = new Parser();
+    // Build TBox with Parser
+    while (input.hasNext()) {
+      String line = input.nextLine();
+      if (line.equals(".")) {
+        break;
+      }
+      parser.parseLine(line);
+    }
+
+    // Build Query
+    System.out.print("Enter query on a single line: " );
+    String line = input.nextLine();
+    SubsumptionEquivalence query = parser.parseQuery(line);
+
+    System.out.println("Reasoning...");
+    Reasoner reasoner = new Reasoner(parser.tbox, query);
+    System.out.println("Result: " +  reasoner.queryIsValid());
+  }
 }
