@@ -202,10 +202,15 @@ public class Parser {
     return  null;
   }
 
-//
-//  public SubsumptionEquivalence parseQuery(String line) {
-//
-//  }
+
+  public SubsumptionEquivalence parseQuery(String line) {
+    String[] tokens1 = line.split(" ");
+    ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
+
+    SubsumptionEquivalence se =
+            new SubsumptionEquivalence(new ConceptExpression(tokens.get(0)), convertToExpression(line));
+    return se.negateRhs();
+  }
 
   public TBox getTBox() {
     return this.tbox;
