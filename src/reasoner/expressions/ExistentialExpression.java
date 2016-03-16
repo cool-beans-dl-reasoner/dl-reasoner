@@ -28,12 +28,9 @@ public class ExistentialExpression extends ExistentialUniversalExpression {
     super(role, concept);
   }
 
- /**
-  * Returns whether two existential expressions are equal each other  
-  *
-  * @param other the other expression
-  * @return      whether the two expressions are equal
-  */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(Object other) {
     if (other instanceof ExistentialExpression) {
