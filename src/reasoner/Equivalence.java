@@ -20,14 +20,15 @@ import reasoner.expressions.Expression;
  */
 public class Equivalence extends SubsumptionEquivalence {
 
- /**
-  * Returns Equivalence that represent the left-hand and right-hand
-  * expressions
-  *
-  * @param lhs the expression on the left-hand side of the dot
-  * @param rhs the expression on the right-hand side of the dot
-  * @return        the Equivalence that represents the concept
-  */
+  /**
+   * Constructs a new Equivalence object that says the lhs expression is equal to the rhs expression.
+   *
+   * For example: new Equivalence(new ConceptExpression("JOHN"), new ConceptExpression("JON"));
+   * would create an equivalence that says that JOHN and JON are the same thing.
+   *
+   * @param lhs the lhs expression
+   * @param rhs the expression that the lhs is equal to
+   */
   public Equivalence(Expression lhs, Expression rhs) {
     super(lhs, rhs);
   }
