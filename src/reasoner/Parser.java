@@ -5,8 +5,15 @@ import reasoner.expressions.*;
 import java.util.*;
 import java.lang.String;
 
-
-//{equivalent, subset, intersect, not, all, exists}
+/**
+ * Parser takes a line of input from System.in and turns it into an expression
+ * and adds it to the TBox
+ *
+ * @author Brian Fung
+ * @author Jon Miranda
+ * @author Sravani Mudduluru
+ * @author Siavash Rezaie
+ */
 public class Parser {
 
   TBox tbox;
@@ -15,14 +22,33 @@ public class Parser {
   private final static int INDEX_OF_ROLE = 1;
   private final static int INDEX_OF_UE_CONCEPT = 3;
 
+ /**
+  * Returns a Parser object to parse through the lines of knowledge and the 
+  * query
+  *
+  * @return the Parser to parse through the strings
+  */
   public Parser() {
     tbox = new TBox();
   }
 
+ /**
+  * Parses through an expression, represented as a string, and adds it to the 
+  * TBox. Called only when parsing through knowledge and not the query
+  *
+  * @param line the line to be parsed
+  */
   public void parseLine(String line) {
     addToTBox(line, convertToExpression(line));
   }
 
+ /**
+  * Converts the expression, represented as a string, into an Expression object,
+  * which will be used to evaluate the query
+  *
+  * @param line the line to be converted into an Expression object
+  * @return     the Expression object that represents the expression
+  */
   private Expression convertToExpression(String line) {
     String[] tokens1 = line.split(" ");
     ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
@@ -43,6 +69,14 @@ public class Parser {
     return parse(tokens.subList(2, tokens.size()));
   }
 
+ /**
+  * Adds an expression to the TBox. @param line and @param d represent the same
+  * expression, but in different forms. line is a String object and d is an 
+  * Expression object
+  *
+  * @param line the expression, as a String, to be added to the TBox
+  * @param d    the expression, as an Expression object, to be added to the TBox
+  */
   private void addToTBox(String line, Expression d) {
 
     if (d == null) {
@@ -62,8 +96,13 @@ public class Parser {
     System.out.println(tbox);
   }
 
-
-
+ /**
+  * Takes in an expression as a List of String and then goes through each toekn
+  * in the list returns an Expression that represents the expression
+  *
+  * @param expression the string to be converted into an Expression
+  * @return           the Expression that represents the List of String
+  */
   public Expression parse(List<String> expression) {
     int unionIndex = expression.indexOf("union");
     int intersectIndex = expression.indexOf("intersect");
@@ -81,7 +120,8 @@ public class Parser {
         Expression expr = parse(concept);
         if (keyword.equals("exists")) {
           return new ExistentialExpression(role, expr);
-        } else if (keyword.equals("forall")) {
+        } 
+        else if (keyword.equals("forall")) {
           return new UniversalExpression(role, expr);
         }
       }
@@ -126,98 +166,25 @@ public class Parser {
   return null;
   }
 
-
-
-  public String negateD(String d) {
-    int unionIndex = d.indexOf("union");
-    int intersectIndex = d.indexOf("intersect");
-
-    if (unionIndex == DOES_NOT_EXIST && intersectIndex == DOES_NOT_EXIST) {
-      String keyword = d.substring(0, d.indexOf(" ")); //get first keyword
-
-      if (keyword.equals("exists") || keyword.equals("forall")) {
-        int dotIndex = d.indexOf("dot");
-        String lhs = d.substring(0, dotIndex+2); //gets the "dot" and the space
-        String concept = d.substring(dotIndex+2, d.length());
-
-        String expr = negateD(concept);
-
-        d = lhs + expr;
-        if (keyword.equals("exists")) {
-          return d.replaceAll("exists", "forall");
-        }
-        else if (keyword.equals("forall")) {
-          return d.replaceAll("forall", "exists");
-        }
-      }
-      else if (keyword.equals("lessthanorequalto")) {
-        return d.replaceAll("lessthanorequalto", "greaterthanorequalto");
-      }
-      else if (keyword.equals("greaterthanorequalto")) {
-        return d.replaceAll("greaterthanorequalto", "lessthanorequalto");
-      }
-      else if (keyword.equals("top")) {
-        return d;
-      }
-      else if (keyword.equals("bottom")) {
-        return d;
-      }
-      else {
-        String first = d.substring(0, d.indexOf(" "));
-
-        if (first.equals("not")) {
-          return "not " + d;
-        }
-        else {
-          return d;
-        }
-      }
-    }
-    else {
-      if (unionIndex == DOES_NOT_EXIST) {
-        String lhs = negateD(d.substring(0, intersectIndex));
-        String rhs = negateD(d.substring(intersectIndex + 1, d.length()));
-
-        return lhs + "union" + rhs;
-      }
-      else if (intersectIndex == DOES_NOT_EXIST) {
-        String lhs = negateD(d.substring(0, unionIndex));
-        String rhs = negateD(d.substring(unionIndex + 1, d.length()));
-
-        return lhs + "intersect" + rhs;
-      }
-      else if (intersectIndex < unionIndex) {
-        String lhs = negateD(d.substring(0, intersectIndex));
-        String rhs = negateD(d.substring(intersectIndex + 1, d.length()));
-
-        return lhs + "union" + rhs;
-      }
-      else if (unionIndex < intersectIndex) {
-        String lhs = negateD(d.substring(0, unionIndex));
-        String rhs = negateD(d.substring(unionIndex + 1, d.length()));
-
-        return lhs + "intersect" + rhs;
-      }
-    }
-    return  null;
-  }
-
-
+ /**
+  * Parses the query and returns a SubsumptionEquivalence to be evaluated. 
+  * The SubsumptionEqivalence will contain the negated expression
+  *
+  * E.g. "C subset D" needs to be changed to "C subset not D" to prove if there
+  * is a contradiction
+  *
+  * @param line the string that holds the query
+  * @return     the SubsumptionEquivalence that holds the query
+  */
   public SubsumptionEquivalence parseQuery(String line) {
     String[] tokens1 = line.split(" ");
     ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
 
     SubsumptionEquivalence se =
             new SubsumptionEquivalence(new ConceptExpression(tokens.get(0)), convertToExpression(line));
-//    System.out.println(se.negateRhs());
     return se.negateRhs();
   }
-
-  public TBox getTBox() {
-    return this.tbox;
-  }
-
-}//end Parser
+}
 
 
 
