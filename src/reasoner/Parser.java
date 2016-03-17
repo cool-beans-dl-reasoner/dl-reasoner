@@ -38,7 +38,7 @@ public class Parser {
   *
   * @param line the line to be parsed
   */
-  public void parseLine(String line) {
+  public void parseExpression(String line) {
     addToTBox(line, convertToExpression(line));
   }
 
