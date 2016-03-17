@@ -56,7 +56,7 @@ public class Main {
       if (line.equals(".")) {
         break;
       }
-      parser.parseLine(line);
+      parser.parseExpression(line);
     }
 
     // Build Query
