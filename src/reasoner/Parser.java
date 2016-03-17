@@ -167,7 +167,11 @@ public class Parser {
   }
 
  /**
-  * Parses the query and returns a SubsumptionEquivalence to be evaluated 
+  * Parses the query and returns a SubsumptionEquivalence to be evaluated. 
+  * The SubsumptionEqivalence will contain the negated expression
+  *
+  * E.g. "C subset D" needs to be changed to "C subset not D" to prove if there
+  * is a contradiction
   *
   * @param line the string that holds the query
   * @return     the SubsumptionEquivalence that holds the query
