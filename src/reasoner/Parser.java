@@ -15,11 +15,12 @@ public class Parser {
   private final static int INDEX_OF_ROLE = 1;
   private final static int INDEX_OF_UE_CONCEPT = 3;
 
+
   public Parser() {
     tbox = new TBox();
   }
 
-  public void parseLine(String line) {
+  public void parseExpression(String line) {
     addToTBox(line, convertToExpression(line));
   }
 
@@ -27,6 +28,7 @@ public class Parser {
     String[] tokens1 = line.split(" ");
     ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
 
+    //error checking
     if(tokens.size() < MINIMUM_AMOUNT_OF_TOKENS) {
       System.out.println("not enough tokens");
       return null;
@@ -34,6 +36,7 @@ public class Parser {
 
     String keyword = tokens.get(1);
     ConceptExpression c = new ConceptExpression(tokens.get(0));
+
     if(!tokens.get(1).equals("equivalent") && !tokens.get(1).equals("subset")){
       //illegal syntax
       System.out.println("Second word must be equivalent or subset");
@@ -127,89 +130,12 @@ public class Parser {
   }
 
 
-
-  public String negateD(String d) {
-    int unionIndex = d.indexOf("union");
-    int intersectIndex = d.indexOf("intersect");
-
-    if (unionIndex == DOES_NOT_EXIST && intersectIndex == DOES_NOT_EXIST) {
-      String keyword = d.substring(0, d.indexOf(" ")); //get first keyword
-
-      if (keyword.equals("exists") || keyword.equals("forall")) {
-        int dotIndex = d.indexOf("dot");
-        String lhs = d.substring(0, dotIndex+2); //gets the "dot" and the space
-        String concept = d.substring(dotIndex+2, d.length());
-
-        String expr = negateD(concept);
-
-        d = lhs + expr;
-        if (keyword.equals("exists")) {
-          return d.replaceAll("exists", "forall");
-        }
-        else if (keyword.equals("forall")) {
-          return d.replaceAll("forall", "exists");
-        }
-      }
-      else if (keyword.equals("lessthanorequalto")) {
-        return d.replaceAll("lessthanorequalto", "greaterthanorequalto");
-      }
-      else if (keyword.equals("greaterthanorequalto")) {
-        return d.replaceAll("greaterthanorequalto", "lessthanorequalto");
-      }
-      else if (keyword.equals("top")) {
-        return d;
-      }
-      else if (keyword.equals("bottom")) {
-        return d;
-      }
-      else {
-        String first = d.substring(0, d.indexOf(" "));
-
-        if (first.equals("not")) {
-          return "not " + d;
-        }
-        else {
-          return d;
-        }
-      }
-    }
-    else {
-      if (unionIndex == DOES_NOT_EXIST) {
-        String lhs = negateD(d.substring(0, intersectIndex));
-        String rhs = negateD(d.substring(intersectIndex + 1, d.length()));
-
-        return lhs + "union" + rhs;
-      }
-      else if (intersectIndex == DOES_NOT_EXIST) {
-        String lhs = negateD(d.substring(0, unionIndex));
-        String rhs = negateD(d.substring(unionIndex + 1, d.length()));
-
-        return lhs + "intersect" + rhs;
-      }
-      else if (intersectIndex < unionIndex) {
-        String lhs = negateD(d.substring(0, intersectIndex));
-        String rhs = negateD(d.substring(intersectIndex + 1, d.length()));
-
-        return lhs + "union" + rhs;
-      }
-      else if (unionIndex < intersectIndex) {
-        String lhs = negateD(d.substring(0, unionIndex));
-        String rhs = negateD(d.substring(unionIndex + 1, d.length()));
-
-        return lhs + "intersect" + rhs;
-      }
-    }
-    return  null;
-  }
-
-
   public SubsumptionEquivalence parseQuery(String line) {
     String[] tokens1 = line.split(" ");
     ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
 
     SubsumptionEquivalence se =
             new SubsumptionEquivalence(new ConceptExpression(tokens.get(0)), convertToExpression(line));
-//    System.out.println(se.negateRhs());
     return se.negateRhs();
   }
 
@@ -217,7 +143,7 @@ public class Parser {
     return this.tbox;
   }
 
-}//end Parser
+}//end class Parser
 
 
 

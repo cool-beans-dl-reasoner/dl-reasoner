@@ -56,7 +56,7 @@ public class Main {
       if (line.equals(".")) {
         break;
       }
-      parser.parseLine(line);
+      parser.parseExpression(line);
     }
 
     // Build Query
@@ -67,5 +67,7 @@ public class Main {
     System.out.println("Reasoning...");
     Reasoner reasoner = new Reasoner(parser.tbox, query);
     System.out.println("Result: " +  reasoner.queryIsValid());
+    System.out.println(parser.tbox);
+
   }
 }
