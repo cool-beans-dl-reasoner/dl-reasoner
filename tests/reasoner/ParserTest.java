@@ -12,36 +12,36 @@ public class ParserTest {
   @Test
   public void BritishgotoBar() {
     Parser parser = new Parser();
-    parser.parseLine("British subset exists goto dot not park union forall goto dot not library");
-    parser.parseLine("John subset rich OR NOT poor AND ");
-    parser.parseLine("British subset exists goto dot school");
+    parser.parseExpression("British subset exists goto dot not park union forall goto dot not library");
+    parser.parseExpression("John subset rich OR NOT poor AND ");
+    parser.parseExpression("British subset exists goto dot school");
   }
 
   @Test
   public void equality() {
     Parser parser = new Parser();
-    parser.parseLine("British subset lessthanorequalto 2 dot goto");
+    parser.parseExpression("British subset lessthanorequalto 2 dot goto");
   }
 
   @Test
   public void testNot() {
     Parser parser = new Parser();
-    parser.parseLine("British subset not poor");
+    parser.parseExpression("British subset not poor");
   }
 
   @Test
   public void FATTEST() {
     Parser parser = new Parser();
-    parser.parseLine("British subset exists goto dot not bar intersect greaterthanorequalto 2 dot goto union rich");
-    parser.parseLine("British subset not rich");
-    parser.parseLine("John equivalent British");
+    parser.parseExpression("British subset exists goto dot not bar intersect greaterthanorequalto 2 dot goto union rich");
+    parser.parseExpression("British subset not rich");
+    parser.parseExpression("John equivalent British");
   }
 
   @Test
   public void testJohnSubsetCarryNotBooks() {
     Parser parser = new Parser();
-    parser.parseLine("JOHN subset BRITISH");
-    parser.parseLine("BRITISH subset exists carry dot not BOOKS");
+    parser.parseExpression("JOHN subset BRITISH");
+    parser.parseExpression("BRITISH subset exists carry dot not BOOKS");
 
     SubsumptionEquivalence query = parser.parseQuery("JOHN subset exists carry dot not BOOKS");
     Reasoner reasoner = new Reasoner(parser.getTBox(), query);
@@ -57,7 +57,7 @@ public class ParserTest {
   @Test
   public void testRichMan() {
     Parser parser = new Parser();
-    parser.parseLine("RICH_MAN equivalent RICH intersect MAN");
+    parser.parseExpression("RICH_MAN equivalent RICH intersect MAN");
 
     TBox tbox = parser.getTBox();
     ConceptExpression man = new ConceptExpression("MAN");
@@ -73,7 +73,7 @@ public class ParserTest {
   @Test
   public void testRichWoman() {
     Parser parser = new Parser();
-    parser.parseLine("RICH_WOMAN equivalent RICH intersect WOMAN");
+    parser.parseExpression("RICH_WOMAN equivalent RICH intersect WOMAN");
     TBox tbox = parser.getTBox();
     ConceptExpression woman = new ConceptExpression("WOMAN");
     ConceptExpression rich = new ConceptExpression("RICH");
@@ -88,7 +88,7 @@ public class ParserTest {
   @Test
   public void testcowissubsetofAnimal() {
     Parser parser = new Parser();
-    parser.parseLine("COW subset ANIMAL");
+    parser.parseExpression("COW subset ANIMAL");
     TBox tbox = parser.getTBox();
     ConceptExpression cow = new ConceptExpression("COW");
     ConceptExpression animal = new ConceptExpression("ANIMAL");
@@ -100,7 +100,7 @@ public class ParserTest {
   @Test
   public void testStudents() {
     Parser parser = new Parser();
-    parser.parseLine("STUDENTS equivalent UNDERGRAD intersect GRAD");
+    parser.parseExpression("STUDENTS equivalent UNDERGRAD intersect GRAD");
     TBox tbox = parser.getTBox();
     ConceptExpression undergrad = new ConceptExpression("UNDERGRAD");
     ConceptExpression grad = new ConceptExpression("GRAD");
@@ -114,7 +114,7 @@ public class ParserTest {
   @Test
   public void fluffyeatsKibbles() {
     Parser parser = new Parser();
-    parser.parseLine("FLUFFY eats KIBBLES");
+    parser.parseExpression("FLUFFY eats KIBBLES");
     TBox tbox = parser.getTBox();
     ConceptExpression fluffy = new ConceptExpression("FLUFFY");
     ConceptExpression kibbles = new ConceptExpression("KIBBLES");
@@ -128,7 +128,7 @@ public class ParserTest {
   @Test
   public void fluffylikesfish() {
     Parser parser = new Parser();
-    parser.parseLine("FLUFFY likes FISH");
+    parser.parseExpression("FLUFFY likes FISH");
     TBox tbox = parser.getTBox();
     ConceptExpression fluffy = new ConceptExpression("FLUFFY");
     ConceptExpression fish = new ConceptExpression("FISH");
@@ -142,7 +142,7 @@ public class ParserTest {
   @Test
   public void fluffylikesGuacomole() {
     Parser parser = new Parser();
-    parser.parseLine("FLUFFY likes GUACOMOLE");
+    parser.parseExpression("FLUFFY likes GUACOMOLE");
     TBox tbox = parser.getTBox();
     ConceptExpression fluffy = new ConceptExpression("FLUFFY");
     ConceptExpression guacomole = new ConceptExpression("GUACOMOLE");
@@ -157,7 +157,7 @@ public class ParserTest {
   @Test
   public void JohneatsonlyFruits() {
     Parser parser = new Parser();
-    parser.parseLine("JOHN eats only FRUITS");
+    parser.parseExpression("JOHN eats only FRUITS");
     TBox tBox = new TBox();
     ConceptExpression john = new ConceptExpression("JOHN");
     ConceptExpression fruits = new ConceptExpression("FRUITS");
