@@ -13,15 +13,13 @@ public class NotExpression extends Expression {
 
  /**
   * Constructs a new NotExpression object.
+  * The alternative static {@method negateExpression} is recommended over this
+  * constructor.
   *
   * @param expression the expression to be negated
   */
   public NotExpression(Expression expression) {
-    if (expression instanceof NotExpression) {
-      this.expression = ((NotExpression) expression).expression;
-    } else {
-      this.expression = expression;
-    }
+    this.expression = expression;
   }
 
   /**
@@ -57,5 +55,20 @@ public class NotExpression extends Expression {
   @Override
   public String toString() {
     return String.format("NOT(%s)", expression);
+  }
+
+
+  /**
+   * Static helper method to negate an expression.
+   *
+   * @param expression The expression to negate.
+   * @return The negated expression.
+   */
+  public static Expression negateExpression(Expression expression) {
+    if (expression instanceof NotExpression) {
+      return ((NotExpression) expression).expression;
+    } else {
+      return new NotExpression(expression);
+    }
   }
 }
