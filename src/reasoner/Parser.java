@@ -22,33 +22,33 @@ public class Parser {
   private final static int INDEX_OF_ROLE = 1;
   private final static int INDEX_OF_UE_CONCEPT = 3;
 
- /**
-  * Returns a Parser object to parse through the lines of knowledge and the 
-  * query
-  *
-  * @return the Parser to parse through the strings
-  */
+  /**
+   * Returns a Parser object to parse through the lines of knowledge and the
+   * query
+   *
+   * @return the Parser to parse through the strings
+   */
   public Parser() {
     tbox = new TBox();
   }
 
- /**
-  * Parses through an expression, represented as a string, and adds it to the 
-  * TBox. Called only when parsing through knowledge and not the query
-  *
-  * @param line the line to be parsed
-  */
+  /**
+   * Parses through an expression, represented as a string, and adds it to the
+   * TBox. Called only when parsing through knowledge and not the query
+   *
+   * @param line the line to be parsed
+   */
   public void parseExpression(String line) {
     addToTBox(line, convertToExpression(line));
   }
 
- /**
-  * Converts the expression, represented as a string, into an Expression object,
-  * which will be used to evaluate the query
-  *
-  * @param line the line to be converted into an Expression object
-  * @return     the Expression object that represents the expression
-  */
+  /**
+   * Converts the expression, represented as a string, into an Expression object,
+   * which will be used to evaluate the query
+   *
+   * @param line the line to be converted into an Expression object
+   * @return     the Expression object that represents the expression
+   */
   private Expression convertToExpression(String line) {
     String[] tokens1 = line.split(" ");
     ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
@@ -69,14 +69,14 @@ public class Parser {
     return parse(tokens.subList(2, tokens.size()));
   }
 
- /**
-  * Adds an expression to the TBox. @param line and @param d represent the same
-  * expression, but in different forms. line is a String object and d is an 
-  * Expression object
-  *
-  * @param line the expression, as a String, to be added to the TBox
-  * @param d    the expression, as an Expression object, to be added to the TBox
-  */
+  /**
+   * Adds an expression to the TBox. @param line and @param d represent the same
+   * expression, but in different forms. line is a String object and d is an
+   * Expression object
+   *
+   * @param line the expression, as a String, to be added to the TBox
+   * @param d    the expression, as an Expression object, to be added to the TBox
+   */
   private void addToTBox(String line, Expression d) {
 
     if (d == null) {
@@ -96,13 +96,13 @@ public class Parser {
     System.out.println(tbox);
   }
 
- /**
-  * Takes in an expression as a List of String and then goes through each toekn
-  * in the list returns an Expression that represents the expression
-  *
-  * @param expression the string to be converted into an Expression
-  * @return           the Expression that represents the List of String
-  */
+  /**
+   * Takes in an expression as a List of String and then goes through each toekn
+   * in the list returns an Expression that represents the expression
+   *
+   * @param expression the string to be converted into an Expression
+   * @return           the Expression that represents the List of String
+   */
   public Expression parse(List<String> expression) {
     int unionIndex = expression.indexOf("union");
     int intersectIndex = expression.indexOf("intersect");
@@ -120,7 +120,7 @@ public class Parser {
         Expression expr = parse(concept);
         if (keyword.equals("exists")) {
           return new ExistentialExpression(role, expr);
-        } 
+        }
         else if (keyword.equals("forall")) {
           return new UniversalExpression(role, expr);
         }
@@ -163,19 +163,19 @@ public class Parser {
       Expression rhs = parse(expression.subList(unionIndex + 1, expression.size()));
       return new UnionExpression(lhs, rhs);
     }
-  return null;
+    return null;
   }
 
- /**
-  * Parses the query and returns a SubsumptionEquivalence to be evaluated. 
-  * The SubsumptionEqivalence will contain the negated expression
-  *
-  * E.g. "C subset D" needs to be changed to "C subset not D" to prove if there
-  * is a contradiction
-  *
-  * @param line the string that holds the query
-  * @return     the SubsumptionEquivalence that holds the query
-  */
+  /**
+   * Parses the query and returns a SubsumptionEquivalence to be evaluated.
+   * The SubsumptionEqivalence will contain the negated expression
+   *
+   * E.g. "C subset D" needs to be changed to "C subset not D" to prove if there
+   * is a contradiction
+   *
+   * @param line the string that holds the query
+   * @return     the SubsumptionEquivalence that holds the query
+   */
   public SubsumptionEquivalence parseQuery(String line) {
     String[] tokens1 = line.split(" ");
     ArrayList<String> tokens =  new ArrayList<>(Arrays.asList(tokens1));
@@ -184,8 +184,8 @@ public class Parser {
             new SubsumptionEquivalence(new ConceptExpression(tokens.get(0)), convertToExpression(line));
     return se.negateRhs();
   }
+
+  public TBox getTBox() {
+    return tbox;
+  }
 }
-
-
-
-
