@@ -14,31 +14,37 @@ public class Reasoner {
   public SubsumptionEquivalence query;
 
   /**
-   * Constructor for Reasoner
+   * Constructs a new Reasoner.
    * 
-   * @param tbox  the list of parse expressions
-   * @param query the negated query
+   * @param tbox  The terminology box.
+   * @param query A subsumption query (with D already negated).
    */
   public Reasoner(TBox tbox, SubsumptionEquivalence query) {
     this.tbox = tbox;
     this.query = query;
   }
 
+  /**
+   * Uses the query and the TBox to try and find a contradiction.
+   * If the knowledge base can no longer grow, and a contradiction has not been made,
+   * then we claim that the query is valid.
+   *
+   * @return True if the query is valid, false otherwise.
+   */
   public boolean queryIsValid() {
-    Set<Expression> cAndD = new HashSet<>();
-    cAndD.add(query.lhs);
-    cAndD.add(query.rhs);
+    Set<Expression> expressions = new HashSet<>();
+    expressions.add(query.lhs);
+    expressions.add(query.rhs);
 
     boolean databaseUpdated;
     boolean foundContradiction;
     do {
       databaseUpdated = false;
-      foundContradiction = hasContradiction(cAndD, cAndD);
+      foundContradiction = hasContradiction(expressions, expressions);
       if (!foundContradiction) {
-        databaseUpdated |= expand(cAndD);
-
+        databaseUpdated |= expand(expressions);
         System.out.println(tbox);
-        print("C", cAndD);
+        print(expressions);
       }
     } while (!foundContradiction && databaseUpdated);
 
@@ -49,16 +55,13 @@ public class Reasoner {
   }
 
   /**
-   * Tries to find if there is a contradiction within the 2 given expressions
+   * Looks through both sets of expressions and tries to find a contradiction.
    * 
-   * @param  lhs left-hand side expression
-   * @param  rhs right-hand side expression
-   * @return     true if there is a contradiction, false otherwise
+   * @param  lhs A set of expressions.
+   * @param  rhs A set of expressions.
+   * @return     true if there is a contradiction between the two sets, false otherwise
    */
   public boolean hasContradiction(Set<Expression> lhs, Set<Expression> rhs) {
-    // TODO: This method looks through all the expressions in lhs, and tries to find if there are any contradicting
-    // expressions in the rhs.
-
     for (Expression expression1 : lhs) {
       if (expression1 instanceof NumberRestrictionExpression) {
         NumberRestrictionExpression e = (NumberRestrictionExpression) expression1;
@@ -76,14 +79,10 @@ public class Reasoner {
   }
 
   /**
-   * This will look wihin expressions for all expressions where the left-hand
-   * side is the query and use it to expand the atomic element
-   *
-   * e.g. John -> look at left hand side with only John (if also rich and human)
-   * look at left hand side for rich and human
-   * 
+   * This method takes a set of expressions, and uses it to expand and "add knowledge"
+   * to our Terminology Box (TBOX).
    * @param  expressions the set of expressions to be expanded
-   * @return 
+   * @return True if the knowledge base grew, false otherwise.
    */
   public boolean expand(Set<Expression> expressions) {
     int originalSize = expressions.size();
@@ -113,8 +112,11 @@ public class Reasoner {
     return originalSize != expressions.size();
   }
 
-  public static void print(String message, Set<Expression> expressions) {
-    System.out.println(message);
+  /**
+   * Helper method to print out a set of expressions.
+   * @param expressions Set of expressions to print.
+   */
+  public static void print(Set<Expression> expressions) {
     for (Expression e : expressions) {
       System.out.print("\t");
       System.out.println(e);
