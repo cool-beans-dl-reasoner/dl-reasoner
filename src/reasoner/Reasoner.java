@@ -43,8 +43,8 @@ public class Reasoner {
       foundContradiction = hasContradiction(expressions, expressions);
       if (!foundContradiction) {
         databaseUpdated |= expand(expressions);
-        System.out.println(tbox);
-        print(expressions);
+        //System.out.println(tbox);
+        //print(expressions);
       }
     } while (!foundContradiction && databaseUpdated);
 

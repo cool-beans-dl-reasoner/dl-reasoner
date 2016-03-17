@@ -59,15 +59,22 @@ public class Main {
       parser.parseExpression(line);
     }
 
-    // Build Query
-    System.out.print("Enter query on a single line: " );
-    String line = input.nextLine();
-    SubsumptionEquivalence query = parser.parseQuery(line);
+    TBox originalTbox = parser.tbox;
 
-    System.out.println("Reasoning...");
-    Reasoner reasoner = new Reasoner(parser.tbox, query);
-    System.out.println("Result: " +  reasoner.queryIsValid());
-    System.out.println(parser.tbox);
+    // Build Query
+    while (true) {
+
+      System.out.print("Enter query on a single line: ");
+      String line = input.nextLine();
+      SubsumptionEquivalence query = parser.parseQuery(line);
+
+
+      System.out.println("Reasoning...");
+      Reasoner reasoner = new Reasoner((TBox) parser.tbox.clone(), query);
+      String result = reasoner.queryIsValid() ? "valid" : "not valid";
+      System.out.println("\n" + result + "\n");
+      System.out.println(parser.tbox);
+    }
 
   }
 }
