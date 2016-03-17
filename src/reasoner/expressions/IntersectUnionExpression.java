@@ -40,4 +40,23 @@ public class IntersectUnionExpression extends Expression {
     }
     return super.contradicts(other);
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean equals(Object other) {
+    if (other instanceof IntersectUnionExpression) {
+      return lhs.equals(((IntersectUnionExpression) other).lhs)
+          && rhs.equals(((IntersectUnionExpression) other).rhs);
+    }
+    return super.equals(other);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int hashCode() {
+    return lhs.hashCode() + rhs.hashCode();
+  }
 }
